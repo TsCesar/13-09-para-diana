@@ -136,13 +136,6 @@ export class Burst {
     await Promise.all(cargas);
     this.listo = true;
     this.host.classList.add('esta-lista');
-
-    // Si ella ya había elegido otro fotograma en una visita anterior, la <img>
-    // nítida trae el mío: hay que dejar el lienzo delante para que mande el suyo.
-    if (this.elegido !== this.m.keepIndex) {
-      this.#pintar(this.elegido);
-      this.host.classList.add('manda-ella');
-    }
   }
 
   #dimensionar() {
@@ -204,18 +197,6 @@ export class Burst {
     this.host.classList.remove('esta-corriendo');
   }
 
-  /** Cambia el fotograma que se queda (juego "La ráfaga correcta"). */
-  elegir(k) {
-    this.elegido = Math.max(0, Math.min(this.frames.length - 1, k));
-    this.ticks.forEach((t, j) => t.classList.toggle('es-elegido', j === this.elegido));
-    this.#cargar().then(() => {
-      this.#pintar(this.elegido);
-      // El lienzo pasa a mandar para siempre: la <img> nítida sigue sirviendo
-      // el fotograma que elegí yo, y el que manda ahora es el suyo.
-      this.host.classList.add('manda-ella');
-    });
-  }
-
   #gestos() {
     let x0 = null, movido = false;
 
@@ -254,7 +235,7 @@ export class Burst {
   }
 }
 
-export function montarRafagas(raiz, medios, elegidas = {}) {
+export function montarRafagas(raiz, medios) {
   const mapa = new Map(medios.momentos.map((m) => [m.id, m]));
   const vivas = new Map();
   raiz.querySelectorAll('[data-rafaga]').forEach((el) => {
@@ -272,7 +253,6 @@ export function montarRafagas(raiz, medios, elegidas = {}) {
       alt: el.dataset.alt || '',
       sizes: el.dataset.sizes,
       prioridad: el.dataset.prioridad,
-      elegido: elegidas[m.id],
     }));
   });
   return vivas;

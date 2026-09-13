@@ -37,8 +37,8 @@ Todo vive en **`src/data/content.js`**. Nada de esto hay que programarlo.
 Si vacías cualquiera de esos arrays, su sección **no deja hueco ni título**: no
 se enseñan secciones a medio hacer. Lo mismo con los textos sueltos: un título,
 un párrafo o un pie puesto a `''` no se dibuja, y tampoco su margen. Por eso la
-las dos graduaciones y el camino no llevan ni una palabra — están vacíos a
-propósito, no a medias. Escribe algo dentro y vuelven a aparecer solos. Y `CARTA.esBorrador: true` vuelve a poner
+el coche amarillo, las dos graduaciones y el camino no llevan ni una palabra —
+están vacíos a propósito, no a medias. Escribe algo dentro y vuelven a aparecer solos. Y `CARTA.esBorrador: true` vuelve a poner
 el aviso amarillo encima de la carta, por si la quieres seguir tocando.
 
 La canción no suena nunca sola. Al entrar se pregunta una vez («Una cosa antes

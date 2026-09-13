@@ -30,6 +30,8 @@ Lo abrirá ella, en su móvil, desde un enlace.
     Taysson, es un gato**. Fuera el clip entero, no sólo el pie.
   - **01311** (`cesped`): la vertical de Diana sola en el césped que abría la
     galería a sangre.
+  - **01240** (`pCesped`): la que abría la tira de post-créditos. Ella sola en
+    el mono, en el césped, a media carrera — misma ropa y mismo rato que 01311.
   Los dos ids están en `EXCLUDE_REASON.retirado` para que no puedan volver por
   el mosaico, por las caras del final ni por descuido. Originales intactos.
 - **La escena de la nevera está retirada.** Cesar la quitó expresamente
@@ -52,6 +54,8 @@ Esto manda sobre cualquier impulso de explicar algo:
   ni una palabra; Taysson tiene un solo pie; el mosaico entra sin presentación.
 - Lo vacío no se dibuja: `main.js` tiene `cabeza()` y `pie()`, y un `''` en
   `content.js` borra la frase **y su margen**. Borrar es la opción normal.
+- **Capítulos mudos enteros**: `coche` (el amarillo), `acto`, `oro` y `senda`.
+  Son cuatro, y es deliberado: es donde la foto manda.
 
 # Non-negotiables
 - Mobile first
@@ -135,6 +139,21 @@ necesario cuando el sujeto ocupa una franja del cuadro (01279: mesa al 60 %).
 `object-position` **no** sirve para eso: los marcos conservan la proporción del
 vídeo, así que `object-fit: cover` nunca recorta.
 
+**En móvil las fotos van a ancho completo.** Debajo de 700px, la galería, las
+secuencias y los pares del 20·12 ocupan el 100 % del contenido: el péndulo de
+anchos (88 % → 70 % → 64 %) y las secuencias en 2 y 3 columnas quedaban preciosos
+en escritorio pero convertían medio recorrido en miniaturas en un iPhone. El
+tríptico y el túnel **se apilan** en móvil con el mismo hueco de 4px, que es lo
+que los sigue leyendo como secuencia. A partir de 700px vuelve todo.
+
+Tres cosas van SIEMPRE juntas o la foto se ve blanda: el ancho del CSS, el
+`data-sizes` del marco en `src/main.js` y el interruptor `menuda` de la
+curación. Si una foto pasa a verse a ancho completo hay que decirlo en `sizes`
+(si no, el navegador descarga el derivado pequeño) y quitarle `menuda` (840px se
+nota en una pantalla de 3x). Por eso el tríptico del jardín dejó de ser `menuda`.
+La tira de post-créditos sí sigue en dos columnas y sí sigue `menuda`: son las
+de propina, no el recorrido.
+
 **Apaisado**: una foto 9:16 a todo el ancho en escritorio se convierte en un muro
 de 2.500 px sin cara dentro. Los marcos se limitan por altura (78vh; la galería
 68vh y las secuencias 46vh) y el ancho lo fija la proporción. La portada y el
@@ -173,12 +192,16 @@ para revisar fotos hay que capturar por viewport, no por elemento.
 lo vacío **no se dibuja**, ni el hueco. Los tres están encendidos: puerta
 `activo: true`, canción en `public/audio/` y doce razones.
 
-**Quedan dos juegos, no cuatro.** En la edición final se eliminaron por completo
-(no ocultos con CSS): «¿Cuántas crees que hice?» (`JUEGOS.cuantas`, la función
-`juegoCuantas`, el bloque `.cuantas*` de `juegos.css` y su div) y «¿Cuánto me
-conoces?» (`QUIZ`, `montarQuiz`, el bloque `.quiz*` y su div). Sobreviven «Tú
-eliges» (antes «La ráfaga correcta») y «Seis caras». No reintroducirlos para
-hacer pasar un test. `.carta` es el capítulo de la carta — los naipes del memory se
+**Queda UN juego: «Seis caras».** Los otros tres se eliminaron de verdad, no con
+CSS: «¿Cuántas crees que hice?» (`JUEGOS.cuantas` + `juegoCuantas` + `.cuantas*`),
+«¿Cuánto me conoces?» (`QUIZ` + `montarQuiz` + `.quiz*`) y «Tú eliges» (antes
+«La ráfaga correcta»: `JUEGOS.eleccion`, `JUEGO_RAFAGAS`, `.eleccion*`/`.tira*`
+y **el módulo `src/modules/games.js` entero**, que se quedó vacío). Con él se fue
+todo su estado: `leerElegidas`, la llave `diana-1309-elegidas`, el parámetro
+`elegidas` de `montarRafagas`/`juegoMemoria`, `Burst.elegir()` y la clase
+`manda-ella`. El capítulo tampoco lleva ya cabecera («Dos juegos / Cortos.
+Prometido.»): con un solo juego, «Seis caras» es el título. No reintroducir nada
+de esto para hacer pasar un test. `.carta` es el capítulo de la carta — los naipes del memory se
 llaman `.naipe` a propósito: llamarlos `.carta` le comía el papel y el margen a
 la carta de Diana.
 

@@ -29,16 +29,11 @@
 .rafaga__quieta { opacity: 1; transition: opacity 200ms linear; }
 .rafaga__lienzo { opacity: 0; transition: opacity 120ms linear; }
 
-/* Mientras corre manda el lienzo; en reposo manda la imagen nítida grande.
-   `manda-ella` es permanente: cuando Diana cambia el fotograma elegido en el
-   juego, la <img> nítida sigue teniendo el mío, así que el lienzo se queda
-   delante para que se vea el suyo. */
+/* Mientras corre manda el lienzo; en reposo manda la imagen nítida grande. */
 .rafaga.esta-corriendo .rafaga__lienzo,
-.rafaga.esta-recorriendo .rafaga__lienzo,
-.rafaga.manda-ella .rafaga__lienzo { opacity: 1; }
+.rafaga.esta-recorriendo .rafaga__lienzo { opacity: 1; }
 .rafaga.esta-corriendo .rafaga__quieta,
-.rafaga.esta-recorriendo .rafaga__quieta,
-.rafaga.manda-ella .rafaga__quieta { opacity: 0; }
+.rafaga.esta-recorriendo .rafaga__quieta { opacity: 0; }
 
 /* El raíl: cuenta cuántas había. Es información, no adorno — así que vive
    pegado al borde del marco, sin caja y sin fondo. En reposo casi no está;

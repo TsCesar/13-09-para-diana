@@ -5,12 +5,11 @@ import './styles/juegos.css';
 import './styles/capas.css';
 
 import indiceCrudo from './data/media.json';
-import { PORTADA, CAPITULOS, JUEGOS, CARTA, FINAL, POSTCREDITOS, RAZONES, DESEO, UI } from './data/content.js';
+import { PORTADA, CAPITULOS, CARTA, FINAL, POSTCREDITOS, RAZONES, DESEO, UI } from './data/content.js';
 import { conBase } from './modules/rutas.js';
 import { montarRafagas } from './modules/burst.js';
 import { montarGrado } from './modules/grade.js';
 import { crearVideo } from './modules/video.js';
-import { juegoEleccion, leerElegidas } from './modules/games.js';
 import { juegoMemoria } from './modules/memoria.js';
 import { montarProgreso } from './modules/progreso.js';
 import { montarLightbox } from './modules/lightbox.js';
@@ -115,8 +114,8 @@ const capCoche = `
   </div>
   <!-- El mismo coche otro día: entra y ya está seco. Dos fotos, sin texto. -->
   <div class="secuencia secuencia--dos">
-    <div class="marco" data-rafaga="tunelEntra" data-sizes="(min-width:700px) 46vw, 47vw" data-alt=""></div>
-    <div class="marco" data-rafaga="tunelSeco" data-sizes="(min-width:700px) 46vw, 47vw" data-alt=""></div>
+    <div class="marco" data-rafaga="tunelEntra" data-sizes="(min-width:700px) 46vw, 100vw" data-alt=""></div>
+    <div class="marco" data-rafaga="tunelSeco" data-sizes="(min-width:700px) 46vw, 100vw" data-alt=""></div>
   </div>
 </section>`;
 
@@ -146,11 +145,11 @@ const capAniversario = `
   </div>
   <div class="aniv__par">
     <figure class="momento">
-      <div class="marco" data-rafaga="ascensor" data-sizes="(min-width:700px) 42vw, 86vw" data-alt=""></div>
+      <div class="marco" data-rafaga="ascensor" data-sizes="(min-width:700px) 42vw, 100vw" data-alt=""></div>
       ${pie(CAPITULOS.aniversario.pies.ascensor)}
     </figure>
     <figure class="momento momento--baja">
-      <div class="marco" data-rafaga="cocheNocturno" data-sizes="(min-width:700px) 42vw, 86vw" data-alt=""></div>
+      <div class="marco" data-rafaga="cocheNocturno" data-sizes="(min-width:700px) 42vw, 100vw" data-alt=""></div>
       ${pie(CAPITULOS.aniversario.pies.cocheNocturno)}
     </figure>
   </div>
@@ -204,41 +203,41 @@ const capGaleria = `
   ${cabeza(CAPITULOS.galeria)}
 
   <div class="galeria__par galeria__par--primero">
-    <div class="marco" data-rafaga="cerca" data-sizes="(min-width:700px) 44vw, 88vw" data-alt=""></div>
-    <div class="marco" data-rafaga="casa" data-sizes="(min-width:700px) 38vw, 72vw" data-alt=""></div>
+    <div class="marco" data-rafaga="cerca" data-sizes="(min-width:700px) 44vw, 100vw" data-alt=""></div>
+    <div class="marco" data-rafaga="casa" data-sizes="(min-width:700px) 38vw, 100vw" data-alt=""></div>
   </div>
 
   <!-- Tríptico: posan, se ríen, se acercan. Van pegadas a propósito —
        el hueco pequeño es lo que hace que se lean como una secuencia. -->
   <div class="secuencia secuencia--tres">
-    <div class="marco" data-rafaga="jardinA" data-sizes="31vw" data-alt=""></div>
-    <div class="marco" data-rafaga="jardinB" data-sizes="31vw" data-alt=""></div>
-    <div class="marco" data-rafaga="jardinC" data-sizes="31vw" data-alt=""></div>
+    <div class="marco" data-rafaga="jardinA" data-sizes="(min-width:700px) 31vw, 100vw" data-alt=""></div>
+    <div class="marco" data-rafaga="jardinB" data-sizes="(min-width:700px) 31vw, 100vw" data-alt=""></div>
+    <div class="marco" data-rafaga="jardinC" data-sizes="(min-width:700px) 31vw, 100vw" data-alt=""></div>
   </div>
 
   <div class="galeria__par galeria__par--vuelta">
-    <div class="marco" data-rafaga="espejoRosa" data-sizes="(min-width:700px) 40vw, 76vw" data-alt=""></div>
-    <div class="marco" data-rafaga="cama" data-sizes="(min-width:700px) 44vw, 88vw" data-alt=""></div>
+    <div class="marco" data-rafaga="espejoRosa" data-sizes="(min-width:700px) 40vw, 100vw" data-alt=""></div>
+    <div class="marco" data-rafaga="cama" data-sizes="(min-width:700px) 44vw, 100vw" data-alt=""></div>
   </div>
 
   <!-- El respiro. A sangre no funcionaba: en un móvil, una vertical a todo el
        ancho deja una pantalla entera ocupada por su espalda. Contenida y
        desplazada se lee como lo que es, un sitio. -->
   <div class="galeria__respiro">
-    <div class="marco" data-rafaga="cueva" data-sizes="(min-width:1024px) 40vw, 78vw" data-alt=""></div>
+    <div class="marco" data-rafaga="cueva" data-sizes="(min-width:1024px) 40vw, (min-width:700px) 78vw, 100vw" data-alt=""></div>
   </div>
 
   <div class="galeria__cierre">
-    <div class="marco" data-rafaga="camino" data-sizes="(min-width:1024px) 34vw, 64vw" data-alt=""></div>
+    <div class="marco" data-rafaga="camino" data-sizes="(min-width:1024px) 34vw, (min-width:700px) 64vw, 100vw" data-alt=""></div>
   </div>
 </section>`;
 
-/* ── 9. Juegos ────────────────────────────────────────────── */
+/* ── 9. El juego ──────────────────────────────────────────────
+   Queda uno. Sin cabecera de capítulo encima: el juego trae su propio
+   título y anunciarlo dos veces sobraba. */
 const capJuegos = `
 <section class="cap" id="juegos" data-grado="#1B1B1B">
-  ${cabeza(JUEGOS)}
-  <div class="juego" id="juego-eleccion"></div>
-  <div class="juego juego--linea" id="juego-memoria"></div>
+  <div id="juego-memoria"></div>
 </section>`;
 
 /* ── Cosas que adoro de ti — sólo existe si RAZONES.lista tiene algo ── */
@@ -297,11 +296,14 @@ const capFinal = `
 /* ── 13. Post-créditos ───────────────────────────────────── */
 /* Arriba, doce fotos buenas que no tenían dónde ir; debajo, el mosaico, que
    entra sin que nadie lo presente. */
-// Doce: cuadra exacto a 2, 3 y 4 columnas, así que ninguna fila se queda coja.
+// Once. Eran doce y cuadraban exacto a 2, 3 y 4 columnas, pero Cesar retiró la
+// primera (01240) y lo que NO se hace es meter otra para cuadrar la rejilla: la
+// siguiente ocupa su sitio y ya está. El desfase de las pares disimula de sobra
+// la fila corta del final.
 // El orden agrupa lo que se parece —las dos de llevarla en brazos, las tres del
 // paseo, los tres espejos— para que se lean como tomas del mismo rato y no como
 // repeticiones sueltas repartidas por la tira.
-const POST_EXTRA = ['pCesped', 'pDePie', 'pBrazos', 'pLlevada', 'pJardin',
+const POST_EXTRA = ['pDePie', 'pBrazos', 'pLlevada', 'pJardin',
   'pSendero', 'pSendero2', 'pArco', 'pEspejoA', 'pEspejoB', 'pEspejoC', 'pGym'];
 
 const capPost = `
@@ -346,8 +348,7 @@ app.querySelectorAll('[data-video]').forEach((slot) => {
 montarRazones(app.querySelector('#razones .cap__cuerpo'));
 if (!RAZONES.lista?.length) app.querySelector('#razones')?.remove();
 
-const elegidas = leerElegidas();
-const rafagas = montarRafagas(app, medios, elegidas);
+montarRafagas(app, medios);
 
 /* Pistas sobre la foto. Sólo dos: la primera secuencia —donde se enseña el
    gesto por primera vez— y el camino, que ya no lleva ni una palabra y
@@ -366,26 +367,14 @@ for (const [sel, texto] of [
 
 montarGrado([...app.querySelectorAll('[data-grado]')]);
 
-/* Las doce cartas del memory son seis fotos que ya se han visto en la web:
+/* El único juego. Las doce cartas son seis fotos que ya se han visto antes:
    no cuestan descarga nueva, pero aun así se montan al acercarse. */
 {
   const zona = document.getElementById('juego-memoria');
   new IntersectionObserver((es, o) => {
     if (!es[0].isIntersecting) return;
     o.disconnect();
-    juegoMemoria(zona, medios, elegidas);
-  }, { rootMargin: '200% 0px' }).observe(zona);
-}
-
-/* Las tiras de contactos del juego son ~43 fotogramas. Montarlas al arrancar
-   añadía casi 800 kB a la carga inicial de una web que empieza por una foto.
-   Se construyen cuando el capítulo se acerca. */
-{
-  const zona = document.getElementById('juego-eleccion');
-  new IntersectionObserver((es, o) => {
-    if (!es[0].isIntersecting) return;
-    o.disconnect();
-    juegoEleccion(zona, medios, rafagas);
+    juegoMemoria(zona, medios);
   }, { rootMargin: '200% 0px' }).observe(zona);
 }
 
@@ -399,10 +388,9 @@ montarGrado([...app.querySelectorAll('[data-grado]')]);
   // Intercalado por turnos entre momentos: puestas en fila, veinte fotogramas
   // del mismo ramo se leen como un error de carga en vez de como el archivo.
   // Sin aleatoriedad: el orden sigue siendo determinista.
-  const pilas = medios.momentos.map((m) => {
-    const keep = elegidas[m.id] ?? m.keepIndex;
-    return m.frames.filter((_, k) => k !== keep);
-  }).filter((p) => p.length);
+  const pilas = medios.momentos
+    .map((m) => m.frames.filter((_, k) => k !== m.keepIndex))
+    .filter((p) => p.length);
 
   const sobras = [];
   for (let i = 0; sobras.length < pilas.reduce((n, p) => n + p.length, 0); i++) {
@@ -432,10 +420,8 @@ montarGrado([...app.querySelectorAll('[data-grado]')]);
 {
   const fondo = app.querySelector('.final__fondo');
   const marcados = medios.momentos.filter((m) => m.cierre);
-  const caras = (marcados.length ? marcados : medios.momentos).map((m) => {
-    const i = elegidas[m.id] ?? m.keepIndex;
-    return { url: m.frames[i]?.url || m.keep.srcset[0].url, id: m.id };
-  });
+  const caras = (marcados.length ? marcados : medios.momentos).map((m) =>
+    ({ url: m.frames[m.keepIndex]?.url || m.keep.srcset[0].url, id: m.id }));
 
   caras.forEach((c, k) => {
     const im = new Image();

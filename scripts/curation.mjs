@@ -41,11 +41,14 @@ export const EXCLUDE_REASON = {
   //   01410 — el clip que estaba en el capítulo de Taysson y NO es Taysson:
   //           es un gato. (Taysson es el canela de pelo áspero con arnés rojo.)
   //   01311 — la vertical de Diana sola en el césped, la que abría la galería.
+  //   01240 — la que abría la tira de post-créditos: ella sola en el mono,
+  //           en el césped, a media carrera. Misma ropa y mismo rato que
+  //           01311, y fuera por lo mismo.
   // Los originales siguen intactos en Fotos_y_Videos/. Están aquí y no
   // simplemente borrados de MOMENTOS/VIDEOS a propósito: así no pueden volver
   // ni por el mosaico, ni por las caras del final, ni por descuido — si algún
   // día alguien las reescribe en la curación, media:prepare se para.
-  retirado: ['01311', '01410'],
+  retirado: ['01240', '01311', '01410'],
 };
 
 export const MOMENTOS = [
@@ -185,16 +188,17 @@ export const MOMENTOS = [
   { id: 'cerca',      kind: 'still', grade: '#282015', memoria: true, cierre: true, frames: ['01188'], keep: 0 },
   { id: 'casa',       kind: 'still', grade: '#271C1E', frames: ['01191'], keep: 0 },
   // Tríptico: posan, se ríen, se acercan. Tres fotos seguidas que cuentan algo.
-  { id: 'jardinA',    kind: 'still', menuda: true, grade: '#151C21', frames: ['01242'], keep: 0 },
-  { id: 'jardinB',    kind: 'still', menuda: true, grade: '#151C21', frames: ['01246'], keep: 0 },
-  { id: 'jardinC',    kind: 'still', menuda: true, grade: '#151C21', cierre: true, frames: ['01248'], keep: 0 },
+  // Sin `menuda`: en móvil van a ancho completo, y 840px se ve blando en una
+  // pantalla de 3x. Sólo siguen siendo pequeñas a partir de tablet.
+  { id: 'jardinA',    kind: 'still', grade: '#151C21', frames: ['01242'], keep: 0 },
+  { id: 'jardinB',    kind: 'still', grade: '#151C21', frames: ['01246'], keep: 0 },
+  { id: 'jardinC',    kind: 'still', grade: '#151C21', cierre: true, frames: ['01248'], keep: 0 },
   { id: 'espejoRosa', kind: 'still', grade: '#2A171A', frames: ['01186'], keep: 0 },
   { id: 'cama',       kind: 'still', grade: '#1C1410', cierre: true, frames: ['01196'], keep: 0 },
   { id: 'cueva',      kind: 'still', grade: '#18171A', frames: ['01249'], keep: 0 },
   { id: 'camino',     kind: 'still', grade: '#494D3D', frames: ['01313'], keep: 0 },
 
   // Post-créditos. Buenas, pero sin capítulo donde encajaran.
-  { id: 'pCesped',   kind: 'still', menuda: true, grade: '#2A251A', frames: ['01240'], keep: 0 },
   { id: 'pBrazos',   kind: 'still', menuda: true, grade: '#2D2B25', frames: ['01238'], keep: 0 },
   { id: 'pDePie',    kind: 'still', menuda: true, grade: '#2D2B25', frames: ['01239'], keep: 0 },
   { id: 'pLlevada',  kind: 'still', menuda: true, grade: '#2D2B25', frames: ['01202'], keep: 0 },
@@ -244,9 +248,6 @@ export const VIDEOS = [
   //   `familia` de arriba, que viven en #oro. No son el mismo día.
   { id: 'graduacion-acto', src: '01108', sound: false, poster: 14.0, grade: '#160B22', trim: [10, 28], crf: 30 },
 ];
-
-// Ráfagas ofrecidas en el juego "La ráfaga correcta".
-export const JUEGO_RAFAGAS = ['ramo', 'gimnasio', 'graduacion'];
 
 // Cifras reales del archivo, contadas con `npm run media:analyze`.
 // Desde la edición final NINGÚN texto visible las repite: se quitó el tono de

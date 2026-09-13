@@ -11,7 +11,7 @@ import { JUEGOS } from '../data/content.js';
 
 const PAREJAS = 6;
 
-export function juegoMemoria(host, medios, elegidas = {}) {
+export function juegoMemoria(host, medios) {
   const j = JUEGOS.memoria;
 
   // Seis momentos distintos y reconocibles. Los marca `memoria` en
@@ -33,12 +33,11 @@ export function juegoMemoria(host, medios, elegidas = {}) {
   }
 
   const imagenDe = (m) => {
-    const i = elegidas[m.id] ?? m.keepIndex;
-    return m.frames[i]?.url || m.keep.srcset[0].url;
+    return m.frames[m.keepIndex]?.url || m.keep.srcset[0].url;
   };
 
   host.innerHTML = `
-    <h3 class="juego__titulo">${j.titulo}</h3>
+    <h2 class="juego__titulo">${j.titulo}</h2>
     <p class="juego__intro">${j.intro}</p>
     <div class="memoria" role="group" aria-label="${j.titulo}"></div>
     <p class="juego__estado" role="status" aria-live="polite"></p>

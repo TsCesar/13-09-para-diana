@@ -89,12 +89,12 @@ export const CAPITULOS = {
   },
 
 
+  // El amarillo: el coche, el aparcamiento de noche, el monte, la vuelta y el
+  // túnel de lavado. Capítulo mudo entero — ni título ni frase ni pies. Es la
+  // parte más visual de todo el recorrido y se aguanta sola.
   coche: {
-    titulo: 'El amarillo',
-
-    texto:
-      'Hay cosas que se repiten tanto que acaban formando parte de los recuerdos sin que te des cuenta.',
-
+    titulo: '',
+    texto: '',
     pies: {},
   },
 
@@ -184,14 +184,14 @@ export const CAPITULOS = {
 
 
 // ─────────────────────────────────────────────────────────────
-// JUEGOS
+// EL JUEGO
 // ─────────────────────────────────────────────────────────────
+//
+// Queda uno solo, y por eso ya no lleva cabecera propia («Dos juegos /
+// Cortos. Prometido.»): el capítulo es el juego, y «Seis caras» es su
+// título. Anunciar un juego justo encima del juego era decirlo dos veces.
 
 export const JUEGOS = {
-  titulo: 'Dos juegos',
-
-  texto: 'Cortos. Prometido.',
-
 
   memoria: {
     titulo: 'Seis caras',
@@ -212,25 +212,6 @@ export const JUEGOS = {
 
     otra:
       'Otra vez',
-  },
-
-
-  eleccion: {
-    titulo:
-      'Tú eliges',
-
-    intro:
-      'De cada momento yo me quedé con una foto.\n' +
-      'Marca la tuya y será esa la que mande a partir de aquí.',
-
-    pista:
-      'Toca la que te quedarías',
-
-    hecho:
-      'Hecho. A partir de ahora es la tuya.',
-
-    reset:
-      'Dejar las mías',
   },
 };
 

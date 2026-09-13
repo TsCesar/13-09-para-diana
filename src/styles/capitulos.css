@@ -135,12 +135,17 @@
    mínimo a propósito: eso es lo que las hace leerse como una secuencia
    —posan, se ríen, se acercan— y no como tres tarjetas sueltas. */
 
+/* En móvil NO se ponen en columnas: tres verticales repartidas en 390px son
+   tres miniaturas de 120px, y aquí las fotos se ven grandes. Se apilan a ancho
+   completo con el mismo hueco mínimo de 4px, que es lo que las sigue leyendo
+   como una secuencia y no como tres fotos sueltas. A partir de tablet ya hay
+   sitio para ponerlas en fila. */
 .secuencia { display: grid; gap: 4px; }
-.secuencia--dos  { grid-template-columns: 1fr 1fr; }
-.secuencia--tres { grid-template-columns: repeat(3, 1fr); }
 
 @media (min-width: 700px) {
   .secuencia { gap: 6px; }
+  .secuencia--dos  { grid-template-columns: 1fr 1fr; }
+  .secuencia--tres { grid-template-columns: repeat(3, 1fr); }
   /* Ni a sangre ni centrada: la secuencia es un apunte, no un plano. */
   .secuencia--dos  { max-width: 74%; }
   .secuencia--tres { max-width: 86%; }
@@ -279,18 +284,19 @@
   gap: clamp(2.2rem, 7vh, 4rem);
   margin-block: clamp(3rem, 9vh, 5.5rem);
 }
-.galeria__par > *              { width: 88%; }
-.galeria__par > *:last-child   { width: 70%; justify-self: end; }
-.galeria__par--vuelta > *              { width: 70%; justify-self: end; }
-.galeria__par--vuelta > *:last-child   { width: 88%; justify-self: start; }
+/* En móvil todas van al 100 %: el péndulo de anchos (88 % → 70 % → 64 %) era
+   bonito en escritorio pero en un iPhone convertía media galería en fotos
+   pequeñas. El ritmo lo siguen marcando el orden y los huecos; a partir de
+   tablet vuelve la asimetría de anchos. */
+.galeria__par > * { width: 100%; }
 
 /* El respiro va desplazado a la derecha, entre dos bloques que empiezan a la
    izquierda: es el péndulo que cierra el capítulo estrechándose. */
 .galeria__respiro { margin-block: clamp(3rem, 9vh, 5.5rem); }
-.galeria__respiro > * { width: 78%; margin-left: auto; }
+.galeria__respiro > * { width: 100%; }
 
 .galeria__cierre { margin-top: clamp(3rem, 9vh, 5.5rem); }
-.galeria__cierre > * { width: 64%; }
+.galeria__cierre > * { width: 100%; }
 
 @media (min-width: 700px) {
   .galeria__par {
@@ -303,6 +309,9 @@
   /* La vuelta invierte quién manda y quién baja, no sólo el orden. */
   .galeria__par--vuelta > *            { width: 84%; justify-self: end; margin-top: clamp(3rem, 11vh, 7rem); }
   .galeria__par--vuelta > *:last-child { width: 100%; justify-self: start; margin-top: 0; }
+
+  .galeria__respiro > * { width: 78%; margin-left: auto; }
+  .galeria__cierre > * { width: 64%; }
 }
 
 @media (min-width: 1024px) {
