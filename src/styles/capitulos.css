@@ -187,13 +187,33 @@
   object-fit: cover;
 }
 .clip__base { filter: blur(12px); transform: scale(1.06); }
-.clip__poster { opacity: 1; transition: opacity 420ms var(--ease); }
-.clip__v { opacity: 0; transition: opacity 420ms var(--ease); }
-.clip.esta-lista .clip__v { opacity: 1; }
+/* El vídeo está siempre opaco y es el poster el que se aparta por encima.
+   Con el vídeo a opacidad 0 mientras carga, WebKit puede tratarlo como
+   invisible y negarle el autoplay: se quedaba el poster como foto quieta. */
+.clip__poster { z-index: 1; opacity: 1; transition: opacity 420ms var(--ease); }
 .clip.esta-lista .clip__poster { opacity: 0; }
 
+/* ▶ de reserva: sólo aparece si el clip está a la vista y no se mueve solo. */
+.clip__play {
+  position: absolute; inset: 0; z-index: 2;
+  margin: auto;
+  width: 3.4rem; height: 3.4rem;
+  display: grid; place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--noche-hondo) 58%, transparent);
+  color: var(--tinta);
+  border: 1px solid color-mix(in srgb, var(--tinta) 30%, transparent);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.clip__play svg { width: 42%; height: 42%; margin-left: 8%; fill: currentColor; }
+.clip__play[hidden] { display: none !important; }
+
 .clip__son {
-  position: absolute; right: .6rem; bottom: .6rem;
+  position: absolute; right: .6rem; bottom: .6rem; z-index: 2;
   background: color-mix(in srgb, var(--noche-hondo) 74%, transparent);
   color: var(--tinta);
   border: 1px solid color-mix(in srgb, var(--tinta) 26%, transparent);
