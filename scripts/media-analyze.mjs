@@ -262,12 +262,11 @@ diferencian sólo en la resolución. **La curación se quedó siempre con la cop
 grande** — 01108 (720×1280) y no 01014 (464×832), 01122 (1280×720) y no 01029
 (848×480), y así con los siete. Eso está bien hecho.
 
-> **Qué implica para el copy.** Los textos dicen «trescientas noventa y nueve
-> fotos y treinta y un vídeos». Son los archivos que hay, contados, y eso es
-> cierto. Pero **momentos distintos** hay ≈ ${fotosDistintas} y ≈ ${videosDistintos}. Si algún día quieres que
-> las cifras cuenten momentos en vez de ficheros, hay que cambiarlas **a la vez**
-> en \`FINAL.cierre\` y en \`JUEGOS.cuantas.preguntas\` (la pregunta «total»),
-> y volver a contar. No cambies una sin la otra.
+> **Qué implica para el copy.** Nada: desde la edición final **ningún texto que
+> lea Diana cita una cifra**. Estos recuentos son de ficheros; **momentos
+> distintos** hay ≈ ${fotosDistintas} y ≈ ${videosDistintos}. Si algún día
+> vuelve a escribirse un número en content.js, hay que decidir primero cuál de
+> las dos cosas se está contando — y, en general, mejor no escribirlo.
 
 ## Qué entró en la web
 

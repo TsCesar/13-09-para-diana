@@ -8,6 +8,7 @@ import fs from 'node:fs/promises';
 import fss from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
+import { BASE } from './sitio.mjs';
 
 const OUT = process.argv[2] || path.resolve('.qa');
 await fs.mkdir(OUT, { recursive: true });
@@ -19,8 +20,13 @@ const TIPOS = {
   '.avif': 'image/avif', '.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
   '.svg': 'image/svg+xml', '.mp4': 'video/mp4', '.woff2': 'font/woff2', '.json': 'application/json',
 };
+// dist/ se sirve BAJO SU PREFIJO, no en la raíz: la build lleva base
+// `/13-09-para-diana/` en cada ruta y servirla en / devuelve 404 en el bundle,
+// la hoja de estilo y todas las fotos — la página se queda en blanco sin un
+// solo error de JS que lo explique. Aquí se sirve igual que GitHub Pages.
 const servidor = http.createServer((req, res) => {
   let f = decodeURIComponent(req.url.split('?')[0]);
+  if (f.startsWith(BASE)) f = '/' + f.slice(BASE.length);
   if (f.endsWith('/')) f += 'index.html';
   const p = path.join(RAIZ, f);
   if (!p.startsWith(RAIZ) || !fss.existsSync(p) || fss.statSync(p).isDirectory()) {
@@ -30,11 +36,12 @@ const servidor = http.createServer((req, res) => {
   fss.createReadStream(p).pipe(res);
 });
 await new Promise((r) => servidor.listen(0, '127.0.0.1', r));
-const URL = `http://127.0.0.1:${servidor.address().port}/`;
+const URL = `http://127.0.0.1:${servidor.address().port}${BASE}`;
 console.log('sirviendo dist/ en', URL);
 
 const TODOS = [
   { n: '390x844',   w: 390,  h: 844  },
+  { n: '393x852',   w: 393,  h: 852  },
   { n: '430x932',   w: 430,  h: 932  },
   { n: '768x1024',  w: 768,  h: 1024 },
   { n: '1440x900',  w: 1440, h: 900  },
@@ -45,7 +52,8 @@ const TAM = process.env.QA_SIZE ? TODOS.filter((t) => t.n === process.env.QA_SIZ
 if (!TAM.length) { console.error('tamaño desconocido:', process.env.QA_SIZE); process.exit(2); }
 
 const SEC = ['portada', 'rafaga', 'cotidiano', 'coche', 'taysson',
-             'aniversario', 'oro', 'galeria', 'juegos', 'senda', 'carta', 'final', 'post'];
+             'aniversario', 'acto', 'oro', 'galeria', 'juegos', 'senda', 'carta',
+             'final', 'post'];
 
 // Traza a fichero: en segundo plano la consola se queda en el búfer y no hay
 // forma de ver dónde se atasca.

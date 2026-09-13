@@ -310,23 +310,34 @@
 
 /* «Una cosa antes de empezar»: sale una vez, al abrir la puerta, y se va en
    cuanto ella elige. Fija y no dentro de la portada: metida en el flujo, en un
-   móvil de 320px empujaba el 13·09 fuera del recorte de la portada. */
+   móvil de 320px empujaba el 13·09 fuera del recorte de la portada.
+
+   Los dos botones van EN UNA FILA, no apilados. Apilados, la caja medía más de
+   200px de alto y en un iPhone tapaba justo el 13·09 y el «Para Diana» — que es
+   lo primero que tiene que ver. En una fila ocupa la mitad y la portada se lee
+   entera por detrás mientras contesta. */
 .musica__preg {
   position: fixed; z-index: 62;
   left: 50%; translate: -50% 0;
   bottom: calc(1.1rem + env(safe-area-inset-bottom));
-  width: min(20rem, calc(100vw - 2 * var(--aire)));
-  display: grid; justify-items: stretch; gap: .5rem;
-  padding: 1rem;
+  width: min(22rem, calc(100vw - 2 * var(--aire)));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+  padding: .75rem .8rem .8rem;
   text-align: center;
   background: color-mix(in srgb, var(--noche-hondo) 93%, transparent);
   border: 1px solid color-mix(in srgb, var(--tinta) 20%, transparent);
   backdrop-filter: blur(6px);
 }
 .musica__preg p {
-  margin: 0 0 .25rem; max-width: none;
+  grid-column: 1 / -1;
+  margin: 0 0 .1rem; max-width: none;
   font-size: var(--t-cap); color: var(--tinta-baja);
 }
+/* El .boton--tenue de al lado trae margin-top para separarse de un texto:
+   aquí está en fila y los dos tienen que quedar a la misma altura. */
+.musica__preg .boton { margin-top: 0; }
 
 /* ─── Razones (sólo si se rellenan) ────────────────────────── */
 

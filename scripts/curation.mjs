@@ -37,6 +37,15 @@ export const EXCLUDE_REASON = {
   // Sale otra persona a la que no podemos identificar con el material que hay.
   // Regla dura de DESIGN.md: no se supone quién aparece en una foto.
   sinIdentificar: ['01006', '01007', '01009', '01067'],
+  // Retiradas en la edición final, por decisión de Cesar:
+  //   01410 — el clip que estaba en el capítulo de Taysson y NO es Taysson:
+  //           es un gato. (Taysson es el canela de pelo áspero con arnés rojo.)
+  //   01311 — la vertical de Diana sola en el césped, la que abría la galería.
+  // Los originales siguen intactos en Fotos_y_Videos/. Están aquí y no
+  // simplemente borrados de MOMENTOS/VIDEOS a propósito: así no pueden volver
+  // ni por el mosaico, ni por las caras del final, ni por descuido — si algún
+  // día alguien las reescribe en la curación, media:prepare se para.
+  retirado: ['01311', '01410'],
 };
 
 export const MOMENTOS = [
@@ -49,7 +58,8 @@ export const MOMENTOS = [
     grade: '#473722',
     memoria: true,
     cierre: true,
-    // Las 25 del pasillo, enteras. El texto dice "veinticinco" y se ven veinticinco.
+    // Las 25 del pasillo, enteras. Ningún texto las cuenta ya, pero se pasan
+    // enteras a propósito: es el momento entero, no una muestra.
     // (01362 es vídeo, por eso no está.)
     frames: ['01360', '01361', '01363', '01364', '01365', '01366', '01367', '01368', '01369',
              '01370', '01371', '01372', '01373', '01374', '01375', '01376', '01377', '01378',
@@ -105,6 +115,8 @@ export const MOMENTOS = [
     frames: ['01090', '01091', '01093', '01097', '01098', '01099', '01100'],
     keep: 5, // 01099
   },
+  // Graduación DE CESAR: jardín, ladrillo, banda naranja, Diana con el mono.
+  // No confundir con 01108, que es la graduación de ella (ver VIDEOS).
   {
     id: 'graduacion',
     kind: 'burst',
@@ -167,10 +179,9 @@ export const MOMENTOS = [
   { id: 'tunelSeco',  kind: 'still', grade: '#3B3938', frames: ['01139'], keep: 0 },
 
   // Galería
-  // A sangre, pero no `grande`: los marcos a sangre se limitan por altura
-  // (78vh), así que en escritorio nunca pasan de ~950 px reales. 1080 sobra y
-  // 1920 sería medio mega que nadie llega a pedir.
-  { id: 'cesped',     kind: 'still', grade: '#2A251A', cierre: true, frames: ['01311'], keep: 0 },
+  // Ninguna va a sangre: los marcos a sangre se limitan por altura (78vh), así
+  // que en escritorio nunca pasan de ~950 px reales. 1080 sobra y 1920 sería
+  // medio mega que nadie llega a pedir.
   { id: 'cerca',      kind: 'still', grade: '#282015', memoria: true, cierre: true, frames: ['01188'], keep: 0 },
   { id: 'casa',       kind: 'still', grade: '#271C1E', frames: ['01191'], keep: 0 },
   // Tríptico: posan, se ríen, se acercan. Tres fotos seguidas que cuentan algo.
@@ -214,19 +225,34 @@ export const MOMENTOS = [
 export const VIDEOS = [
   { id: 'taysson-alza',    src: '01279', sound: true,  poster: 7.5,  grade: '#2A2622', recorte: [720, 700, 0, 30] },
   { id: 'taysson-sofa',    src: '01284', sound: false, poster: 12.0, grade: '#2A2622', trim: [8, 26] },
-  { id: 'taysson-brazos',  src: '01410', sound: false, poster: 4.0,  grade: '#2A2622' },
   { id: 'senda-viva',      src: '01338', sound: false, poster: 0.5,  grade: '#3B402D' }, // Live Photo 1,5 s
   { id: 'conducir',        src: '01150', sound: false, poster: 1.0,  grade: '#171412' },
   { id: 'carretera',       src: '01122', sound: false, poster: 8.0,  grade: '#120E0C', trim: [4, 18] },
-  { id: 'graduacion-acto', src: '01108', sound: false, poster: 14.0, grade: '#23231F', trim: [10, 28], crf: 30 },
+  // OJO: EN EL ARCHIVO HAY DOS GRADUACIONES DISTINTAS Y NO SE MEZCLAN.
+  //
+  //   01108 (este clip) = LA GRADUACIÓN DE DIANA. Un pabellón, mesa
+  //   presidencial, cortinas granate, y ella cruzando el escenario con
+  //   vestido largo morado. Confirmado por Cesar y visible en el vídeo.
+  //   Por eso tiene capítulo propio (#acto en src/main.js) y un `grade`
+  //   distinto: medido del propio clip (sombra #160B22, el morado del
+  //   vestido y de las cortinas). El color es lo que impide que se lea
+  //   como una continuación del jardín.
+  //
+  //   La graduación DE CESAR es otra cosa: las fotos al aire libre, con
+  //   el edificio de ladrillo, él con la banda naranja y Diana con el
+  //   mono azul marino — los momentos `graduacion`, `enBrazos` y
+  //   `familia` de arriba, que viven en #oro. No son el mismo día.
+  { id: 'graduacion-acto', src: '01108', sound: false, poster: 14.0, grade: '#160B22', trim: [10, 28], crf: 30 },
 ];
 
 // Ráfagas ofrecidas en el juego "La ráfaga correcta".
 export const JUEGO_RAFAGAS = ['ramo', 'gimnasio', 'graduacion'];
 
 // Cifras reales del archivo, contadas con `npm run media:analyze`.
-// Los textos de la web las repiten a mano en src/data/content.js: si esto
-// cambia, hay que mirar `JUEGOS.cuantas` y su `cierre`.
+// Desde la edición final NINGÚN texto visible las repite: se quitó el tono de
+// inventario ("once fotos", "treinta y seis fotos", "diecinueve pasos"…) y con
+// él el juego que preguntaba cantidades. Esto se queda como dato del archivo
+// para los informes, no como fuente de copy.
 //
 // 12·09·2026 — los vídeos pasaron de 31 a 30: 00998 (el reel de Instagram
 // ajeno, que ya estaba excluido y no se usaba en ninguna parte) dejó de estar

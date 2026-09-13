@@ -17,7 +17,7 @@ que te den, pégalo ahí, `npm run build` otra vez y vuelve a subir. Ver
 **Publicarla**, más abajo.
 
 Nada más es obligatorio: la carta está escrita, la puerta encendida, la música
-puesta, y las razones y el quiz rellenos.
+puesta y las razones rellenas.
 
 ---
 
@@ -31,11 +31,14 @@ Todo vive en **`src/data/content.js`**. Nada de esto hay que programarlo.
 | Las preguntas de la puerta | `ACCESO.preguntas` | Taysson y el 20 de diciembre |
 | Música | `MUSICA.archivo` | **puesta** — `audio/te-quiero-tanto.mp3` |
 | «Unas cuantas razones» | `RAZONES.lista` | **12 frases** |
-| «¿Cuánto me conoces?» | `QUIZ.preguntas` | **4 preguntas** |
-| La carta | `CARTA.parrafos` | **escrita**, 9 párrafos |
+| La carta | `CARTA.parrafos` | **escrita**, 8 párrafos |
+| Los títulos y pies de cada capítulo | `CAPITULOS` | varios **vacíos a propósito** |
 
-Si vacías cualquiera de esos arrays, su sección **no deja hueco ni título**: la
-web no enseña secciones a medio hacer. Y `CARTA.esBorrador: true` vuelve a poner
+Si vacías cualquiera de esos arrays, su sección **no deja hueco ni título**: no
+se enseñan secciones a medio hacer. Lo mismo con los textos sueltos: un título,
+un párrafo o un pie puesto a `''` no se dibuja, y tampoco su margen. Por eso la
+las dos graduaciones y el camino no llevan ni una palabra — están vacíos a
+propósito, no a medias. Escribe algo dentro y vuelven a aparecer solos. Y `CARTA.esBorrador: true` vuelve a poner
 el aviso amarillo encima de la carta, por si la quieres seguir tocando.
 
 La canción no suena nunca sola. Al entrar se pregunta una vez («Una cosa antes
@@ -169,9 +172,10 @@ No toca nada: sólo lee y escribe informes en `Fotos_y_Videos/_ANALISIS/`.
   borde amarillo en la elegida de cada ráfaga y apagadas las que no entraron.
 - **`manifiesto.json`** — lo mismo en crudo.
 
-> Si cambias qué fotos entran en una ráfaga, revisa los números que aparecen
-> escritos en los textos: están contados del archivo real y tienen que seguir
-> siendo verdad.
+> Ningún texto de los que lee Diana cita ya una cifra: en la edición final se
+> quitó el tono de inventario («once fotos», «treinta y seis fotos»…). Así que
+> cambiar qué fotos entran en una secuencia no obliga a tocar ningún texto.
+> Los recuentos siguen siendo reales, pero viven en los informes.
 
 ---
 
@@ -181,9 +185,15 @@ No toca nada: sólo lee y escribe informes en `Fotos_y_Videos/_ANALISIS/`.
 npm run qa
 ```
 
-Abre un navegador de verdad, recorre la web en cinco tamaños de pantalla
-(desde un iPhone hasta 1920px) y guarda capturas en `.qa/`, avisando de
-desbordes horizontales y errores de consola.
+Abre un navegador de verdad, recorre la web en seis tamaños de pantalla
+(390×844, 393×852, 430×932, 768×1024, 1440×900 y 1920×1080) y guarda capturas en
+`.qa/`, avisando de desbordes horizontales y errores de consola.
+
+Para uno solo (va mucho más rápido):
+
+```
+QA_SIZE=390x844 npm run qa      # en PowerShell:  $env:QA_SIZE='390x844'; npm run qa
+```
 
 Y esto otro no mira capturas: **toca las cosas**.
 

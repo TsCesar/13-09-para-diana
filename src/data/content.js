@@ -2,10 +2,22 @@
 // 13·09 — PARA DIANA
 // ═══════════════════════════════════════════════════════════════
 //
-// TODO EL TEXTO DE LA WEB VIVE AQUÍ.
+// TODO EL TEXTO QUE LEE DIANA VIVE AQUÍ.
 //
-// César: puedes editar cualquier frase directamente en este archivo
-// y se actualizará en la web.
+// César: puedes editar cualquier frase directamente en este archivo.
+//
+// Dos reglas de tono, y son las que mandan sobre todo lo demás:
+//
+//   1. Cada frase le habla a ella. Ninguna explica cómo está hecho esto.
+//      Nada de «web», «página», «archivo», «galería», «ráfaga»,
+//      «fotogramas» ni «capítulo» en lo que se ve.
+//
+//   2. No se cuentan cosas. Ni cuántas fotos hay, ni cuánto dura un vídeo,
+//      ni cuántas veces se repitió una escena. Una foto bonita respira
+//      sola; explicarla la empeora.
+//
+// Un texto vacío ('') NO SE DIBUJA: ni la frase, ni el hueco, ni el margen.
+// Así que borrar es una opción de verdad, y en muchos sitios es la buena.
 //
 // Datos reales utilizados:
 //
@@ -28,6 +40,9 @@ export const ELLA = 'Diana';
 // ─────────────────────────────────────────────────────────────
 // PORTADA
 // ─────────────────────────────────────────────────────────────
+//
+// Se lee de arriba abajo: la frase, «Para Diana», y debajo el 13·09
+// enorme. En tres segundos tiene que quedar claro de quién es el día.
 
 export const PORTADA = {
   fecha: ['13', '09'],
@@ -35,7 +50,7 @@ export const PORTADA = {
   pie: 'Para Diana',
 
   // Aparece cuando la fecha termina de asentarse.
-  entrada: 'Hay fechas que significan mucho más que un día.',
+  entrada: 'Hoy cumples años, y llevo conociéndote casi toda la vida.',
 
   ayuda: 'Desliza',
 };
@@ -44,16 +59,19 @@ export const PORTADA = {
 // ─────────────────────────────────────────────────────────────
 // CAPÍTULOS
 // ─────────────────────────────────────────────────────────────
+//
+// `titulo`, `texto` y cada `pie` son opcionales. Lo que esté vacío
+// no se dibuja: el capítulo se queda en imagen limpia.
 
 export const CAPITULOS = {
 
   rafaga: {
-    titulo: 'Veinticinco fotos. Un solo momento.',
+    titulo: 'Un solo momento',
 
     texto:
-      'El mismo ramo. El mismo sitio. Veinticinco fotos seguidas.\n' +
-      'Y aun así no hay dos iguales, porque en cada una hay una sonrisa, una mirada o una tontería distinta.\n\n' +
-      'Supongo que por eso me cuesta tanto elegir una sola.',
+      'El mismo ramo. El mismo sitio.\n' +
+      'Y aun así, en cada foto hay una sonrisa, una mirada o una tontería distinta.\n\n' +
+      'Por eso me cuesta tanto quedarme con una sola.',
 
     pista: 'Tócala',
   },
@@ -63,18 +81,11 @@ export const CAPITULOS = {
     titulo: 'Lo que no posaste',
 
     texto:
-      'Los momentos pequeños que terminan siendo de los que más me gusta guardar.',
+      'Los momentos pequeños que terminan siendo los que más me gusta guardar.',
 
-    pies: {
-      lavadero:
-        'Once fotos tuyas con una manguera. Once.',
-
-      gimnasio:
-        'Diez intentos de que salieras seria. Ninguno salió bien.',
-
-      conducir:
-        'Tú conduciendo. Siete segundos.',
-    },
+    // Sin pies a propósito: la manguera, el gimnasio y tú conduciendo
+    // se cuentan solos.
+    pies: {},
   },
 
 
@@ -82,18 +93,9 @@ export const CAPITULOS = {
     titulo: 'El amarillo',
 
     texto:
-      'Hay cosas que se acaban repitiendo tanto que terminan formando parte de los recuerdos sin darte cuenta.',
+      'Hay cosas que se repiten tanto que acaban formando parte de los recuerdos sin que te des cuenta.',
 
-    pies: {
-      cocheNoche:
-        'Treinta y seis fotos en un aparcamiento vacío.',
-
-      monte:
-        'Y ocho más con luz de día.',
-
-      carretera:
-        'Volviendo.',
-    },
+    pies: {},
   },
 
 
@@ -101,17 +103,11 @@ export const CAPITULOS = {
     titulo: 'Taysson',
 
     texto:
-      'Y claro, si esta página va sobre ti, era imposible que él no tuviera también su pequeño sitio aquí.',
+      'Si hoy va todo de ti, era imposible que él no tuviera también su sitio.',
 
     pies: {
       alza:
-        'Aquí lo levantas hasta tu cara. Tiene sonido, por si quieres oírlo.',
-
-      brazos:
-        'Doce segundos en brazos y ni un intento de bajarse.',
-
-      sofa:
-        'Y aquí lleva cuarenta y nueve segundos sin moverse.',
+        'Aquí lo levantas hasta tu cara.',
     },
 
     sonido: 'Activar sonido',
@@ -131,59 +127,55 @@ export const CAPITULOS = {
       'Hoy manda el 13·09.\n' +
       'Pero el 20·12 siempre va a ser nuestro.',
 
-    pies: {
-      ascensor:
-        'Cuatro fotos en un ascensor. Salimos mal en las cuatro.',
-
-      cocheNocturno:
-        'Y siete más en un coche parado.',
-    },
+    pies: {},
   },
 
 
+  // EL ACTO DE DIANA — su graduación. El vídeo del pabellón, ella con
+  // vestido cruzando el escenario. Es un momento suyo y tiene capítulo
+  // propio para que no se confunda con el otro día (ver `oro`).
+  //
+  // Mudo por elección, no por prudencia: es un momento de ella y no
+  // necesita que yo lo etiquete. Y sobre todo, aquí NO se inventa nada —
+  // ni fecha, ni sitio, ni carrera, ni título.
+  acto: {
+    titulo: '',
+    texto: '',
+    pie: '',
+  },
+
+
+  // LA GRADUACIÓN DE CESAR — el jardín, el ladrillo, la banda naranja y
+  // Diana con el mono. Otro día distinto del de `acto`: no mezclarlos.
+  //
+  // También mudo, y por lo mismo: las fotos de ese día están porque son
+  // recuerdos suyos también, no porque haya que explicar de quién era la
+  // ceremonia. Poner «esta era la mía / esta era la tuya» no embellece
+  // nada. Si algún día se te ocurre una frase que sí lo haga, se escribe
+  // en `titulo`/`texto` y aparece sola.
   oro: {
-    titulo: 'El día de la luz buena',
-
-    texto:
-      'Treinta y ocho fotos tuyas de pie en el mismo césped.\n' +
-      'Y viendo cómo quedaron, entiendo perfectamente por qué costaba parar.',
-
-    pies: {
-      enBrazos:
-        'Y ocho en las que no tocas el suelo.',
-
-      familia:
-        'Esta no hizo falta repetirla.',
-
-      acto:
-        'El acto era mío. Las treinta y ocho fotos, tuyas.',
-    },
+    titulo: '',
+    texto: '',
+    pies: {},
   },
 
 
-  // Fotos sueltas. La mayoría no lleva pie a propósito: no todo necesita
-  // que yo lo explique, y algunas se ven mejor calladas.
   galeria: {
     titulo: 'Y luego está todo lo demás',
 
     texto:
-      'Fotos sueltas. Sin ráfaga, sin sitio fijo y sin nada que explicar.\n' +
+      'Sin orden y sin motivo.\n' +
       'Están aquí simplemente porque me gustan.',
   },
 
 
+  // El camino. Sin una sola palabra: se arrastra el dedo y ella anda.
+  // La pista se queda porque enseña el gesto, no porque explique nada.
   senda: {
-    titulo: 'Diecinueve pasos',
-
-    texto:
-      'Pásalos rápido y empiezas a andar de verdad.\n' +
-      'Diecinueve fotos que, una detrás de otra, terminan convirtiéndose en un pequeño vídeo sin serlo.',
-
-    pie:
-      'Te vas por el camino y no miras atrás hasta la última.',
-
-    pieViva:
-      'Y justo después del paso diecinueve, ya no hizo falta ninguna foto más.',
+    titulo: '',
+    texto: '',
+    pie: '',
+    pieViva: '',
 
     pista:
       'Arrastra el dedo',
@@ -196,7 +188,7 @@ export const CAPITULOS = {
 // ─────────────────────────────────────────────────────────────
 
 export const JUEGOS = {
-  titulo: 'Tres juegos',
+  titulo: 'Dos juegos',
 
   texto: 'Cortos. Prometido.',
 
@@ -225,88 +217,20 @@ export const JUEGOS = {
 
   eleccion: {
     titulo:
-      'La ráfaga correcta',
+      'Tú eliges',
 
     intro:
-      'Yo elegí una de cada ráfaga para esta web. Ahora te toca a ti.\n' +
-      'La que marques se queda, y el resto de la página la usará a partir de ahora.',
+      'De cada momento yo me quedé con una foto.\n' +
+      'Marca la tuya y será esa la que mande a partir de aquí.',
 
     pista:
       'Toca la que te quedarías',
 
     hecho:
-      'Cambiada. Ahora la web es un poco más tuya.',
+      'Hecho. A partir de ahora es la tuya.',
 
     reset:
       'Dejar las mías',
-
-    final:
-      'Listo. Tres ráfagas, tus tres elegidas.',
-  },
-
-
-  cuantas: {
-    titulo:
-      '¿Cuántas crees que hice?',
-
-    intro:
-      'Una pregunta por sitio. Arrastra hasta tu número.',
-
-    preguntas: [
-      {
-        id: 'ramo',
-        pregunta: 'Tú con el ramo, en el pasillo',
-        real: 25,
-        max: 40,
-        unidad: 'fotos',
-      },
-
-      {
-        id: 'coche',
-        pregunta: 'Tú y el coche amarillo, de noche',
-        real: 36,
-        max: 60,
-        unidad: 'fotos',
-      },
-
-      {
-        id: 'senda',
-        pregunta: 'Tú andando por el camino verde',
-        real: 51,
-        max: 80,
-        unidad: 'fotos',
-      },
-
-      {
-        id: 'total',
-        pregunta: 'Y en total, en todo esto',
-        real: 399,
-        max: 600,
-        unidad: 'fotos',
-      },
-    ],
-
-    comprobar:
-      'Ver',
-
-    siguiente:
-      'Siguiente',
-
-    exacto:
-      'Exacto. {n}.',
-
-    cerca:
-      'Casi. Eran {n}.',
-
-    lejos:
-      'Eran {n}.',
-
-    corto:
-      'Más. Eran {n}.',
-
-    cierre:
-      'Trescientas noventa y nueve fotos y treinta vídeos.\n' +
-      'Ahora ya entiendes por qué elegir unas pocas no era precisamente fácil.',
   },
 };
 
@@ -333,11 +257,9 @@ export const CARTA = {
 
     'Y ahora puedo decir que mi mejor amiga también es la persona a la que quiero. A veces me paro a pensarlo y me sigue pareciendo increíble. Hay gente que pasa años buscando a alguien con quien sentirse completamente ellos mismos, y yo tuve la suerte de encontrarlo en alguien que llevaba conmigo desde que éramos prácticamente unos niños.',
 
-    'También está Taysson, claro. Porque cualquier cosa que hable de ti sin que aparezca él en algún momento estaría incompleta. Sé lo importante que es para ti, y por eso también tenía que tener su pequeño sitio aquí, aunque seguramente él no tenga ni idea de que forma parte de una página web de cumpleaños.',
-
     'El 20 de diciembre siempre va a ser nuestro día, pero hoy esa fecha se hace pequeña. Hoy manda el 13 de septiembre. Porque hoy no estoy celebrando solamente que cumplas años. Estoy celebrando que existes, que formas parte de mi vida y que, después de tantísimo tiempo conociéndonos, todavía me quedan cosas tuyas por descubrir, momentos que vivir contigo y recuerdos que guardar.',
 
-    'No sé qué nos traerá este año ni todo lo que nos queda por delante, pero sí sé lo que quiero: seguir estando a tu lado. Seguir siendo esa persona con la que puedas reírte, hablar de cualquier cosa, hacer el idiota, apoyarte cuando lo necesites y seguir acumulando fotografías hasta que algún día hacer una web como esta sea directamente imposible porque haya demasiadas.',
+    'No sé qué nos traerá este año ni todo lo que nos queda por delante, pero sí sé lo que quiero: seguir estando a tu lado. Seguir siendo esa persona con la que puedas reírte, hablar de cualquier cosa, hacer el idiota, apoyarte cuando lo necesites y seguir sumando momentos contigo, de esos que algún día miraremos atrás y nos harán sonreír.',
 
     'Espero que hoy seas muy feliz, Diana. Espero que este nuevo año te traiga cosas bonitas, que cumplas todo aquello que quieres y que, cuando las cosas no salgan exactamente como esperabas, recuerdes que no tienes que recorrerlas sola. Yo quiero seguir estando ahí, como amigo, como pareja y como la persona que te quiere muchísimo.',
 
@@ -384,13 +306,11 @@ export const POSTCREDITOS = {
     'Una cosa más',
 
   texto:
-    'Después de tantas fotos todavía quedaban algunas fuera.\n' +
-    'Y como elegir nunca ha sido lo mío cuando se trata de ti, aquí van unas cuantas más.',
+    'Elegir nunca ha sido lo mío cuando se trata de ti,\n' +
+    'así que aquí van unas cuantas más.',
 
-  // Encabeza el mosaico de descartes de ráfaga, que es otra cosa distinta
-  // de la tira de fotos buenas de arriba.
-  mosaico:
-    'Y esto de abajo son todos los fotogramas que no llegaron a ser el elegido de su ráfaga. No se ha tirado ninguno.',
+  // Vacío: el mosaico entra sin que nadie lo presente.
+  mosaico: '',
 
   pie:
     'Ahora sí. Fin.',
@@ -405,7 +325,7 @@ export const POSTCREDITOS = {
 // ═══════════════════════════════════════════════════════════════
 //
 // Esto NO es seguridad real.
-// Es simplemente parte de la experiencia.
+// Es simplemente la forma de que lo primero que pase sea suyo.
 //
 // Yo la dejaría ACTIVADA.
 //
@@ -466,7 +386,7 @@ export const ACCESO = {
     'Hola, Diana. ❤️',
 
   reiniciar:
-    'Reiniciar experiencia',
+    'Volver a empezar',
 };
 
 
@@ -482,8 +402,7 @@ export const ACCESO = {
 //
 // public/audio/te-quiero-tanto.mp3
 //
-// La web NO debe intentar reproducirla automáticamente
-// antes de que Diana interactúe.
+// No suena nada hasta que ella dice que sí.
 //
 
 export const MUSICA = {
@@ -518,7 +437,7 @@ export const SECRETOS = {
   hallazgos: {
 
     huella:
-      'Taysson también aprueba esta página 🐾',
+      'Taysson también da el visto bueno 🐾',
 
     aniv:
       '20·12. Como para olvidarme.',
@@ -564,9 +483,8 @@ export const DESEO = {
 // COSAS QUE ADORO DE TI
 // ═══════════════════════════════════════════════════════════════
 //
-// Esta sección aparecerá porque ahora tiene contenido.
-//
 // Si alguna frase no suena 100 % a ti, puedes quitarla o cambiarla.
+// Si se vacía la lista entera, la sección desaparece sola.
 //
 
 export const RAZONES = {
@@ -594,95 +512,10 @@ export const RAZONES = {
 
     'Todo lo que ya hemos vivido y todo lo que todavía nos queda por vivir.',
 
-    'Que entre cientos de fotos siga costándome decidir cuál me gusta más.',
+    'Que mirándote siga sin saber decidir cuál de todas me gusta más.',
 
     'Y, simplemente, que seas tú.',
   ],
-};
-
-
-// ═══════════════════════════════════════════════════════════════
-// QUIZ
-// ═══════════════════════════════════════════════════════════════
-//
-// Todas estas preguntas utilizan únicamente datos reales
-// que conocemos.
-//
-// Si luego quieres meter preguntas mucho más privadas y vuestras,
-// sería todavía mejor.
-//
-
-export const QUIZ = {
-  titulo:
-    '¿Cuánto me conoces?',
-
-  intro:
-    'Cuatro preguntas. Sin trampas.',
-
-  preguntas: [
-
-    {
-      pregunta:
-        '¿Desde qué edad nos conocemos?',
-
-      opciones: [
-        'Desde los 3 años',
-        'Desde los 6 años',
-        'Desde los 10 años',
-        'Desde los 15 años',
-      ],
-
-      correcta: 0,
-    },
-
-    {
-      pregunta:
-        '¿Qué éramos antes de ser pareja?',
-
-      opciones: [
-        'Compañeros de clase',
-        'Mejores amigos',
-        'Vecinos',
-        'Prácticamente desconocidos',
-      ],
-
-      correcta: 1,
-    },
-
-    {
-      pregunta:
-        '¿Cuál es nuestro día?',
-
-      opciones: [
-        '13 de septiembre',
-        '20 de diciembre',
-        '14 de febrero',
-        '31 de diciembre',
-      ],
-
-      correcta: 1,
-    },
-
-    {
-      pregunta:
-        '¿Quién tenía que aparecer sí o sí en esta web?',
-
-      opciones: [
-        'Taysson',
-        'Un gato aleatorio',
-        'Nadie',
-        'El coche solamente',
-      ],
-
-      correcta: 0,
-    },
-  ],
-
-  bien:
-    'Esa te la sabías.',
-
-  mal:
-    'Era: {n}',
 };
 
 
@@ -696,7 +529,7 @@ export const QUIZ = {
 
 export const UI = {
   rafagaEtiqueta: (n) =>
-    `Ráfaga de ${n} fotos`,
+    `Serie de ${n} fotos`,
 
   ampliar:
     'Ver más grande',

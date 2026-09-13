@@ -105,7 +105,8 @@ flores        #473722   cálido, madera del pasillo
 lavadero      #211D1E   neutro frío, hormigón
 gimnasio      #1B1B1B   neutro
 taysson       #3B402D   verde — la senda
-graduación    #23231F   ámbar apagado
+graduación    #23231F   ámbar apagado   (el jardín: la de Cesar)
+acto          #160B22   morado hondo    (el pabellón: la de Diana)
 coche noche   #171412   umbra
 coche monte   #13141B   azul — el único capítulo frío
 ascensor      #21201C   acero templado

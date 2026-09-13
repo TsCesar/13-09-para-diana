@@ -7,15 +7,22 @@ import { chromium } from 'playwright';
 import fss from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
+import { BASE } from './sitio.mjs';
 
 const RAIZ = path.resolve('dist');
 const TIPOS = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
   '.avif': 'image/avif', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml',
   '.mp4': 'video/mp4', '.woff2': 'font/woff2', '.txt': 'text/plain',
+  '.mp3': 'audio/mpeg', '.webp': 'image/webp', '.json': 'application/json',
 };
+// dist/ se sirve BAJO SU PREFIJO, no en la raíz: la build lleva base
+// `/13-09-para-diana/` en cada ruta y servirla en / devuelve 404 en el bundle,
+// la hoja de estilo y todas las fotos — la página se queda en blanco sin un
+// solo error de JS que lo explique. Aquí se sirve igual que GitHub Pages.
 const servidor = http.createServer((req, res) => {
   let f = decodeURIComponent(req.url.split('?')[0]);
+  if (f.startsWith(BASE)) f = '/' + f.slice(BASE.length);
   if (f.endsWith('/')) f += 'index.html';
   const p = path.join(RAIZ, f);
   if (!p.startsWith(RAIZ) || !fss.existsSync(p) || fss.statSync(p).isDirectory()) {
@@ -25,7 +32,7 @@ const servidor = http.createServer((req, res) => {
   fss.createReadStream(p).pipe(res);
 });
 await new Promise((r) => servidor.listen(0, '127.0.0.1', r));
-const URL = `http://127.0.0.1:${servidor.address().port}/`;
+const URL = `http://127.0.0.1:${servidor.address().port}${BASE}`;
 
 const nav = await chromium.launch();
 const fallos = [];

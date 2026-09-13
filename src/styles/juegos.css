@@ -13,7 +13,7 @@
   margin: 1rem 0 0;
 }
 
-/* ── La ráfaga correcta ───────────────────────────────────── */
+/* ── Tú eliges ────────────────────────────────────────────── */
 
 .eleccion { display: grid; gap: clamp(2.5rem, 7vh, 4rem); margin-top: 2rem; }
 
@@ -98,77 +98,7 @@
 }
 .boton--tenue:hover { background: none; color: var(--tinta); border-color: var(--tinta); }
 
-/* ── ¿Cuántas crees que hice? ─────────────────────────────── */
-
-.cuantas { margin-top: 2rem; max-width: 32rem; }
-
-.cuantas__preg {
-  font-family: var(--display);
-  font-size: var(--t-lead);
-  margin-bottom: .6rem;
-}
-
-.cuantas__cifra {
-  display: block;
-  font-family: var(--display);
-  font-size: clamp(3.4rem, 14vw, 5rem);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  color: var(--tinta);
-  transition: color 260ms var(--ease);
-}
-.cuantas__cifra.es-real { color: var(--ibiza); }
-
-.cuantas__mando {
-  -webkit-appearance: none; appearance: none;
-  width: 100%;
-  height: 34px;
-  background: none;
-  margin: .6rem 0 1.1rem;
-  cursor: pointer;
-}
-.cuantas__mando::-webkit-slider-runnable-track {
-  height: 2px; background: color-mix(in srgb, var(--tinta) 26%, transparent);
-}
-.cuantas__mando::-moz-range-track {
-  height: 2px; background: color-mix(in srgb, var(--tinta) 26%, transparent);
-}
-.cuantas__mando::-webkit-slider-thumb {
-  -webkit-appearance: none; appearance: none;
-  width: 14px; height: 30px; margin-top: -14px;
-  background: var(--ibiza); border: 0; border-radius: 0;
-}
-.cuantas__mando::-moz-range-thumb {
-  width: 14px; height: 30px;
-  background: var(--ibiza); border: 0; border-radius: 0;
-}
-.cuantas__mando:disabled { cursor: default; opacity: .5; }
-
-.cuantas__fallo {
-  min-height: 1.6em;
-  margin: 1rem 0 0;
-  font-size: var(--t-cap);
-  color: var(--tinta-baja);
-}
-
-/* Marcas de avance: son 4 preguntas, y es una secuencia de verdad. */
-.cuantas__marcas { display: flex; gap: 5px; margin-top: 1.4rem; }
-.cuantas__marcas i {
-  width: 22px; height: 2px;
-  background: color-mix(in srgb, var(--tinta) 18%, transparent);
-}
-.cuantas__marcas i.es-activa { background: var(--tinta); }
-.cuantas__marcas i.es-hecha { background: var(--ibiza); }
-
-.cuantas__cierre {
-  margin-top: 2.2rem;
-  font-family: var(--display);
-  font-size: var(--t-lead);
-  line-height: 1.5;
-  max-width: 26em;
-}
-
-/* ─── 3. Seis caras ────────────────────────────────────────── */
+/* ─── Seis caras ───────────────────────────────────────────── */
 /* Tres columnas en móvil: doce cartas entran de una pantalla sin scroll,
    y cada carta pasa de 44px de sobra. Cuatro columnas a partir de tablet. */
 
@@ -218,15 +148,6 @@
 .naipe.es-suya .naipe__cara { outline: 2px solid var(--ibiza); outline-offset: -2px; }
 
 .memoria__acc { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.4rem; }
-
-/* ─── Quiz (sólo si se rellena) ────────────────────────────── */
-
-.quiz { margin-top: 1.4rem; max-width: 32rem; }
-.quiz__preg { font-family: var(--display); font-size: var(--t-lead); margin-bottom: 1rem; }
-.quiz__ops { display: grid; gap: .55rem; }
-.quiz__op { text-align: left; width: 100%; }
-.quiz__op.es-bien { border-color: var(--ibiza); color: var(--ibiza); }
-.quiz__op.es-mal  { opacity: .45; }
 
 @media (prefers-reduced-motion: reduce) {
   .naipe__dorso, .naipe__cara { transition: none; }

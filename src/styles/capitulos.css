@@ -202,32 +202,45 @@
   background: var(--ibiza); color: var(--noche-hondo); border-color: var(--ibiza);
 }
 
-/* ─── Taysson ─────────────────────────────────────────────── */
+/* ─── Taysson ─────────────────────────────────────────────────
+   Dos clips. En móvil se apilan; a partir de tablet van en dos columnas y el
+   segundo baja: el desfase es lo que evita que dos vídeos del mismo tamaño
+   se lean como una pareja de tarjetas. */
 
-.taysson { display: grid; gap: clamp(2rem, 6vh, 3.5rem); }
-.taysson__lado { display: grid; gap: clamp(2rem, 6vh, 3.5rem); }
-
-@media (min-width: 900px) {
-  .taysson { grid-template-columns: 1.15fr 1fr; align-items: start; }
-  /* Sólo la segunda columna baja: el desfase es lo que evita que las cuatro
-     piezas se lean como una rejilla de tarjetas. */
-  .taysson__lado + .taysson__lado { margin-top: clamp(2rem, 7vh, 5rem); }
-}
-
-/* Tres clips: uno abre ancho y los otros dos van debajo, desfasados.
-   Nada de rejilla 2×2: son tres, y se nota que son tres a propósito. */
-.taysson--tres { grid-template-columns: none; gap: clamp(2.5rem, 7vh, 4rem); }
-.taysson__par  { display: grid; gap: clamp(2.5rem, 7vh, 4rem); }
+.taysson { display: grid; gap: clamp(2.5rem, 7vh, 4rem); }
 
 @media (min-width: 700px) {
-  .taysson--tres > .taysson__alza { max-width: 66%; }
-  .taysson__par { grid-template-columns: 1.2fr 1fr; align-items: start; }
-  .taysson__par > *:last-child { margin-top: clamp(2rem, 7vh, 5rem); }
+  .taysson--dos {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: start;
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+  .taysson--dos > .taysson__sofa { margin-top: clamp(3rem, 10vh, 6rem); }
 }
-@media (min-width: 900px) {
-  /* El grid-template-columns de .taysson no manda aquí: .taysson--tres es
-     una columna con dos bloques dentro, no dos columnas. */
-  .taysson--tres { grid-template-columns: none; }
+
+/* ─── El acto de Diana ─────────────────────────────────────────
+   Un capítulo de una sola pieza y sin una palabra. No se centra —nada en
+   esta web está centrado— pero se queda estrecho y deja mucho suelo
+   morado alrededor: eso es lo que lo separa del jardín de la otra
+   graduación, que viene justo después y es otro día.
+
+   El tope de ancho existe porque el clip es 9:16: a todo el ancho de una
+   tablet de 768px se convierte en 1.365px de alto que no caben en ninguna
+   pantalla. En apaisado manda la regla general de `.clip`, que ya lo
+   limita por altura. */
+
+.acto__clip { width: 100%; }
+
+@media (min-width: 700px)  { .acto__clip { max-width: 56%; } }
+@media (min-width: 1024px) { .acto__clip { max-width: 40%; } }
+
+/* A la izquierda, como todo (DESIGN.md § Alineación). Y se libra del tope de
+   altura que llevan los demás clips en apaisado: con él, un 9:16 se quedaba en
+   395px de ancho sobre una pantalla de 1440 y el capítulo entero parecía una
+   página vacía con una tira pegada al borde. A 40 % de ancho y altura libre es
+   el plano más alto de toda la web, que es lo que le pega a su día. */
+@media (orientation: landscape) and (min-width: 900px) {
+  .acto__clip .clip__marco { height: auto; width: 100%; }
 }
 
 /* ─── 20·12 ───────────────────────────────────────────────── */
@@ -257,7 +270,9 @@
    alternancia es lo que hace que se lea como una tira de momentos. */
 
 .galeria > .sangre { margin-block: clamp(3rem, 9vh, 5.5rem); }
-.galeria > .sangre:first-of-type { margin-top: 0; }
+/* La galería abre directamente en pareja: la cabecera ya trae su margen y no
+   hace falta sumarle el del primer bloque. */
+.galeria__par--primero { margin-top: 0; }
 
 .galeria__par {
   display: grid;
@@ -331,6 +346,11 @@
   .senda__cuerpo { grid-area: cuerpo; align-self: end; }
   .senda__viva   { grid-area: viva; align-self: start; max-width: 60%; }
   .senda__arco   { grid-area: arco; align-self: start; max-width: 78%; }
+
+  /* Sin cuerpo no hay fila de texto que rellenar: el clip y el arco se
+     reparten la columna derecha ellos solos. */
+  .senda--muda { grid-template-areas: 'media viva' 'media arco'; }
+  .senda--muda .senda__viva { align-self: end; }
 
   /* Segundo y medio: es un apunte, no un plano. Se libra del tope de altura
      que llevan los demás clips en apaisado para poder quedarse pequeño. */
