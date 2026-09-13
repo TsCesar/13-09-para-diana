@@ -314,7 +314,7 @@ const capPost = `
   </div>
   <div class="post__tira">
     ${POST_EXTRA.map((id) =>
-      `<div class="marco" data-rafaga="${id}" data-sizes="(min-width:1024px) 23vw, (min-width:700px) 30vw, 46vw" data-alt=""></div>`).join('')}
+      `<div class="marco" data-rafaga="${id}" data-sizes="(min-width:1024px) 544px, (min-width:700px) 480px, 100vw" data-alt=""></div>`).join('')}
   </div>
   ${POSTCREDITOS.mosaico ? `<p class="pie post__nota">${POSTCREDITOS.mosaico}</p>` : ''}
   <div class="post__mosaico" id="post-mosaico"></div>

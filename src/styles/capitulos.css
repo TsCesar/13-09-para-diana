@@ -484,30 +484,27 @@
 .post { padding-bottom: calc(var(--hueco) + env(safe-area-inset-bottom)); }
 .post__titulo { font-family: var(--display); font-size: var(--t-m); margin-bottom: .5em; }
 
-/* La tira de post-créditos: trece fotos buenas que no encontraron capítulo.
-   Se ven de verdad —no son teselas del mosaico—, así que van a tamaño útil.
-   El desfase de las pares evita que trece verticales iguales se lean como
-   una hoja de contactos. */
+/* La tira de post-créditos: once fotos buenas que no encontraron capítulo.
+   Se ven de verdad —no son teselas del mosaico—, así que van UNA DEBAJO DE
+   OTRA y a ancho completo, como el resto del recorrido. En dos columnas eran
+   miniaturas de 174px, y además con once quedaba una fila coja; en una sola
+   columna se arreglan las dos cosas a la vez y no hace falta inventarse una
+   foto número doce.
+
+   Cada marco toma la proporción de su propia foto (--ratio), así que basta
+   con darles el 100 % de ancho: el alto lo pone ella y no se recorta ni se
+   deforma nada. En tablet y escritorio se limita el ancho de LA TIRA —no el
+   de cada foto— para que once verticales no sean once murallas. */
 .post__tira {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(.55rem, 2.4vw, 1.1rem);
-  align-items: start;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 7vh, 4rem);
   margin: clamp(2rem, 6vh, 3rem) 0 clamp(2.5rem, 8vh, 4rem);
 }
-.post__tira > *:nth-child(even) { margin-top: clamp(1.2rem, 4vh, 2.6rem); }
+.post__tira > * { width: 100%; }
 
-@media (min-width: 700px) {
-  .post__tira { grid-template-columns: repeat(3, 1fr); }
-  .post__tira > *:nth-child(even) { margin-top: 0; }
-  .post__tira > *:nth-child(3n + 2) { margin-top: clamp(1.5rem, 5vh, 3rem); }
-}
-@media (min-width: 1024px) {
-  .post__tira { grid-template-columns: repeat(4, 1fr); }
-  .post__tira > *:nth-child(3n + 2) { margin-top: 0; }
-  .post__tira > *:nth-child(4n + 2),
-  .post__tira > *:nth-child(4n + 4) { margin-top: clamp(1.5rem, 5vh, 3rem); }
-}
+@media (min-width: 700px)  { .post__tira { max-width: 30rem; } }
+@media (min-width: 1024px) { .post__tira { max-width: 34rem; } }
 
 .post__nota { margin-bottom: 0; }
 

@@ -100,8 +100,13 @@ await p.waitForTimeout(200);
 comprobar(await p.locator('.naipe.es-suya').count() === 12, 'memory: se puede saltar');
 
 // ── Lupa ──
-await p.locator('#post').scrollIntoViewIfNeeded();
-await p.waitForTimeout(2000);
+// Se baja hasta el propio mosaico, no hasta el principio de #post: desde que la
+// tira de post-créditos va en una sola columna, entre el título del capítulo y
+// el mosaico hay once fotos a ancho completo. Parado arriba, el mosaico queda
+// muy por debajo del rootMargin de su IntersectionObserver y no se monta nunca.
+await p.locator('#post-mosaico').scrollIntoViewIfNeeded();
+await p.waitForSelector('.post__teja', { timeout: 15000 });
+await p.waitForTimeout(600);
 const tejas = await p.locator('.post__teja').count();
 comprobar(tejas > 100, `lupa: el mosaico tiene ${tejas} teselas`);
 await p.locator('.post__teja').first().click();

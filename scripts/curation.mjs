@@ -199,17 +199,19 @@ export const MOMENTOS = [
   { id: 'camino',     kind: 'still', grade: '#494D3D', frames: ['01313'], keep: 0 },
 
   // Post-créditos. Buenas, pero sin capítulo donde encajaran.
-  { id: 'pBrazos',   kind: 'still', menuda: true, grade: '#2D2B25', frames: ['01238'], keep: 0 },
-  { id: 'pDePie',    kind: 'still', menuda: true, grade: '#2D2B25', frames: ['01239'], keep: 0 },
-  { id: 'pLlevada',  kind: 'still', menuda: true, grade: '#2D2B25', frames: ['01202'], keep: 0 },
-  { id: 'pJardin',   kind: 'still', menuda: true, grade: '#151C21', frames: ['01243'], keep: 0 },
-  { id: 'pSendero',  kind: 'still', menuda: true, grade: '#3A3C2D', frames: ['01318'], keep: 0 },
-  { id: 'pSendero2', kind: 'still', menuda: true, grade: '#3A3C2D', frames: ['01251'], keep: 0 },
-  { id: 'pArco',     kind: 'still', menuda: true, grade: '#353F2C', frames: ['01356'], keep: 0 },
-  { id: 'pEspejoA',  kind: 'still', menuda: true, grade: '#27221B', frames: ['01058'], keep: 0 },
-  { id: 'pEspejoB',  kind: 'still', menuda: true, grade: '#27221B', frames: ['01066'], keep: 0 },
-  { id: 'pEspejoC',  kind: 'still', menuda: true, grade: '#27221B', frames: ['01071'], keep: 0 },
-  { id: 'pGym',      kind: 'still', menuda: true, grade: '#2B2824', frames: ['01126'], keep: 0 },
+  // Sin `menuda`: van a ancho completo en una sola columna, y 840px se ve
+  // blando en una pantalla de 3x. Sin el interruptor suben a 1080.
+  { id: 'pBrazos',   kind: 'still', grade: '#2D2B25', frames: ['01238'], keep: 0 },
+  { id: 'pDePie',    kind: 'still', grade: '#2D2B25', frames: ['01239'], keep: 0 },
+  { id: 'pLlevada',  kind: 'still', grade: '#2D2B25', frames: ['01202'], keep: 0 },
+  { id: 'pJardin',   kind: 'still', grade: '#151C21', frames: ['01243'], keep: 0 },
+  { id: 'pSendero',  kind: 'still', grade: '#3A3C2D', frames: ['01318'], keep: 0 },
+  { id: 'pSendero2', kind: 'still', grade: '#3A3C2D', frames: ['01251'], keep: 0 },
+  { id: 'pArco',     kind: 'still', grade: '#353F2C', frames: ['01356'], keep: 0 },
+  { id: 'pEspejoA',  kind: 'still', grade: '#27221B', frames: ['01058'], keep: 0 },
+  { id: 'pEspejoB',  kind: 'still', grade: '#27221B', frames: ['01066'], keep: 0 },
+  { id: 'pEspejoC',  kind: 'still', grade: '#27221B', frames: ['01071'], keep: 0 },
+  { id: 'pGym',      kind: 'still', grade: '#2B2824', frames: ['01126'], keep: 0 },
 ];
 
 // Vídeos. Todos se sirven silenciados y en bucle salvo `sound: true`,
