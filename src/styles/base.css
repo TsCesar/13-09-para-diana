@@ -1,0 +1,136 @@
+/* ─── Tokens ────────────────────────────────────────────────
+   Los colores no están inventados: están muestreados de las fotos
+   reales con scripts/scene-colors.mjs. Ver DESIGN.md § Color.       */
+
+:root {
+  /* Base */
+  --noche:       #171412;   /* el cielo real en las fotos del coche de noche */
+  --noche-hondo: #120E0C;
+  --eleva:       #221B15;
+  --tinta:       #EFE7DA;
+  --tinta-baja:  #9C8F7F;
+  --papel:       #F2EDE3;
+  --grafito:     #221E19;
+
+  /* Acento: el amarillo del SEAT Ibiza. Poco y con motivo. */
+  --ibiza:       #FFC400;
+
+  /* Grado del capítulo activo. Lo mueve grade.js. */
+  --grado:       var(--noche);
+
+  /* Tipografía */
+  --display: 'Gambarino', 'Iowan Old Style', Georgia, serif;
+  --texto:   'Supreme', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --t-xl:   clamp(4.5rem, 22vw, 13rem);
+  --t-l:    clamp(2.6rem, 9vw, 5rem);
+  --t-m:    clamp(1.9rem, 6vw, 3rem);
+  --t-lead: clamp(1.18rem, 3.6vw, 1.5rem);
+  --t-body: 1.0625rem;
+  --t-cap:  0.8125rem;
+  --t-tick: 0.6875rem;
+
+  /* Espacio */
+  --aire: 1rem;                        /* gutter lateral mínimo, nunca menor */
+  --hueco: clamp(5.5rem, 18vh, 11rem); /* respiración entre capítulos */
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+@media (min-width: 600px) { :root { --aire: 2rem; --t-body: 1.125rem; } }
+@media (min-width: 1024px) { :root { --aire: 3.5rem; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--noche);
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--grado);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: var(--t-body);
+  line-height: 1.65;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  /* El grado es el suelo, no un efecto: cambia lento y sin llamar la atención. */
+  transition: background-color 900ms linear;
+  overflow-x: hidden;
+}
+
+img, video { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; }
+h1 { font-size: var(--t-xl); line-height: .82; letter-spacing: -.03em; }
+h2 { font-size: var(--t-l);  line-height: .95; letter-spacing: -.02em; }
+h3 { font-size: var(--t-m);  line-height: 1.05; }
+
+p { margin: 0 0 1.15em; max-width: 34em; }
+p:last-child { margin-bottom: 0; }
+
+::selection { background: var(--ibiza); color: var(--noche-hondo); }
+
+:focus-visible {
+  outline: 2px solid var(--ibiza);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.saltar {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--ibiza); color: var(--noche-hondo);
+  padding: .7rem 1.1rem; text-decoration: none; font-weight: 500;
+}
+.saltar:focus { left: .5rem; top: .5rem; }
+
+.oculto {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ─── Estructura de capítulo ───────────────────────────────── */
+
+.cap {
+  position: relative;
+  padding: var(--hueco) var(--aire);
+  /* Ningún capítulo se pisa con el siguiente. */
+  isolation: isolate;
+}
+
+.cap__cuerpo { max-width: 34em; }
+
+.cap__titulo { margin-bottom: .7em; }
+
+.cap__texto {
+  color: var(--tinta-baja);
+  font-size: var(--t-lead);
+  font-family: var(--display);
+  line-height: 1.5;
+  white-space: pre-line;
+  max-width: 22em;
+}
+
+.pie {
+  font-size: var(--t-cap);
+  color: var(--tinta-baja);
+  letter-spacing: .01em;
+  margin: .85rem 0 0;
+  max-width: 30em;
+}
+
+/* Desktop: raíl fijo + asimetría 7/5. No es el móvil estirado. */
+@media (min-width: 1024px) {
+  .cap--dos {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .cap--dos.cap--invertido > *:first-child { order: 2; }
+}

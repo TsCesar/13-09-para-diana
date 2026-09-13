@@ -1,0 +1,37 @@
+# ─────────────────────────────────────────────────────────────
+# Este repositorio se sube a GitHub y puede acabar siendo público.
+# Lo que hay aquí abajo NO debe salir del ordenador de César.
+# ─────────────────────────────────────────────────────────────
+
+# Los 429 originales. Material personal: nunca se suben.
+# Se llevan por delante también Fotos_y_Videos/_ANALISIS/, que contiene las
+# miniaturas y los informes visuales de TODAS las fotos, incluidas las
+# excluidas por privadas. Lo que se publica son sólo los derivados curados
+# de public/m/, que sí van en Git porque son los que construyen la web.
+Fotos_y_Videos/
+
+# Configuración local. En GitHub Pages la rellena el workflow.
+# Ver .env.example.
+.env
+.env.local
+.env.*.local
+
+# Dependencias y build. Las reconstruye GitHub Actions en cada push.
+node_modules/
+dist/
+
+# Artefactos de QA: capturas de la web entera, con fotos de Diana dentro.
+.qa/
+playwright-report/
+test-results/
+*.local
+
+# Basura de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+npm-debug.log*
+*.log
+
+# Configuraci�n local de Claude Code
+.claude/

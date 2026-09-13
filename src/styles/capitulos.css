@@ -1,0 +1,526 @@
+/* ─── Portada ──────────────────────────────────────────────
+   La fecha es el elemento tipográfico activo: enorme, recortada,
+   con la ráfaga latiendo detrás. No es un titular sobre una foto. */
+
+.portada {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  align-content: end;
+  /* Deja sitio libre abajo para "Desliza": nada se le echa encima. */
+  padding-bottom: calc(3.4rem + env(safe-area-inset-bottom));
+  overflow: hidden;
+}
+
+.portada__lienzo {
+  position: absolute; inset: 0;
+  z-index: 0;
+}
+.portada__lienzo .rafaga__marco {
+  position: absolute; inset: 0;
+  aspect-ratio: auto;
+  height: 100%;
+}
+.portada__lienzo .rafaga__raton { left: auto; right: .55rem; }
+/* La imagen se apaga para que la fecha mande. Sigue reconociéndose. */
+.portada__lienzo::after {
+  content: ''; position: absolute; inset: 0; z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(18,14,12,.55) 0%, rgba(18,14,12,.18) 38%, rgba(18,14,12,.92) 100%);
+}
+
+.portada__fecha {
+  position: relative; z-index: 3;
+  grid-row: 3;
+  font-family: var(--display);
+  font-size: var(--t-xl);
+  line-height: .78;
+  letter-spacing: -.045em;
+  display: flex; align-items: baseline;
+  color: var(--tinta);
+  translate: 0 .25em;
+  opacity: 0;
+  transition: translate 1100ms var(--ease), opacity 900ms var(--ease);
+}
+.portada.esta-puesta .portada__fecha { translate: 0 0; opacity: 1; }
+
+.portada__p {
+  color: var(--ibiza);
+  font-size: .42em;
+  translate: 0 -.42em;
+  padding-inline: .06em;
+}
+
+/* La frase va ENCIMA de la fecha: la fecha es lo último que se lee y lo que manda. */
+.portada__bloque {
+  position: relative; z-index: 3;
+  grid-row: 2;
+  margin-bottom: 1.1rem;
+  opacity: 0;
+  transition: opacity 900ms var(--ease) 420ms;
+}
+.portada.esta-puesta .portada__bloque { opacity: 1; }
+
+.portada__entrada {
+  font-family: var(--display);
+  font-size: var(--t-lead);
+  line-height: 1.25;
+  max-width: 11em;
+  margin: 0 0 .45rem;
+}
+.portada__pie {
+  margin: 0;
+  font-size: var(--t-cap);
+  color: var(--tinta-baja);
+  letter-spacing: .02em;
+}
+
+.portada__abajo {
+  position: absolute; z-index: 3;
+  left: var(--aire);
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  font-size: var(--t-tick); letter-spacing: .12em;
+  color: color-mix(in srgb, var(--tinta) 46%, transparent);
+  opacity: 0;
+  transition: opacity 800ms var(--ease) 1500ms;
+}
+.portada.esta-puesta .portada__abajo { opacity: 1; }
+
+@media (min-width: 1024px) {
+  .portada { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+}
+
+/* En apaisado, una foto 9:16 a sangre se recorta tantísimo que la cara
+   desaparece. Se sube el encuadre para que ella siga dentro del plano. */
+@media (orientation: landscape) and (min-width: 900px) {
+  .portada__lienzo .rafaga__quieta,
+  .portada__lienzo .rafaga__lienzo,
+  .portada__lienzo .rafaga__base { object-position: 50% 12%; }
+}
+
+/* ─── Piezas comunes ──────────────────────────────────────── */
+
+.marco { display: block; }
+.cap__cabeza { margin-bottom: clamp(2rem, 6vh, 3.5rem); }
+
+.momento { margin: 0; }
+.momento .marco { margin-bottom: 0; }
+
+.tira-momentos {
+  display: grid;
+  gap: clamp(2.5rem, 7vh, 4.5rem);
+}
+@media (min-width: 700px) {
+  .tira-momentos { grid-template-columns: 1fr 1fr; align-items: start; }
+  /* Desfase deliberado: la rejilla no debe leerse como tarjetas iguales. */
+  .momento--baja { margin-top: clamp(3rem, 9vh, 6rem); }
+  .tira-momentos > *:nth-child(3) { grid-column: 1 / -1; max-width: 62%; }
+  .tira-momentos--par > *:nth-child(3) { grid-column: auto; max-width: none; }
+}
+
+.cap--ancho { padding-inline: 0; }
+.cap--ancho > .cap__cuerpo,
+.cap--ancho > .tira-momentos,
+.cap--ancho > .secuencia,
+.cap--ancho > .galeria__par,
+.cap--ancho > .galeria__respiro,
+.cap--ancho > .galeria__cierre { padding-inline: var(--aire); }
+
+/* Segunda tira de un capítulo: sólo necesita separarse de la primera. */
+.tira-momentos + .tira-momentos,
+.tira-momentos + .secuencia { margin-top: clamp(3rem, 9vh, 5.5rem); }
+
+/* ─── Secuencias ──────────────────────────────────────────────
+   Dos o tres fotos del mismo momento, una al lado de otra. El hueco es
+   mínimo a propósito: eso es lo que las hace leerse como una secuencia
+   —posan, se ríen, se acercan— y no como tres tarjetas sueltas. */
+
+.secuencia { display: grid; gap: 4px; }
+.secuencia--dos  { grid-template-columns: 1fr 1fr; }
+.secuencia--tres { grid-template-columns: repeat(3, 1fr); }
+
+@media (min-width: 700px) {
+  .secuencia { gap: 6px; }
+  /* Ni a sangre ni centrada: la secuencia es un apunte, no un plano. */
+  .secuencia--dos  { max-width: 74%; }
+  .secuencia--tres { max-width: 86%; }
+}
+
+.sangre { margin: 0 0 clamp(2.5rem, 7vh, 4.5rem); }
+.pie--sangre { padding-inline: var(--aire); }
+
+/* En apaisado, una foto vertical a todo el ancho se convierte en un muro de
+   2.500 px sin cara dentro. Aquí se limita por altura y el ancho lo fija la
+   propia proporción de la foto: sigue siendo vertical, pero cabe en pantalla. */
+@media (orientation: landscape) and (min-width: 900px) {
+  .momento, .clip, .sangre, .taysson__alza { display: flex; flex-direction: column; }
+  .momento, .clip, .taysson__alza { align-items: flex-start; }
+  .sangre { align-items: center; }
+
+  .momento > .rafaga .rafaga__marco,
+  .sangre > .rafaga .rafaga__marco,
+  .clip .clip__marco {
+    height: min(78vh, 840px);
+    width: auto;
+    max-width: 100%;
+  }
+  .sangre > figcaption { align-self: stretch; }
+}
+
+/* ─── Clips de vídeo ──────────────────────────────────────── */
+
+.clip { margin: 0; }
+.clip__marco {
+  position: relative;
+  aspect-ratio: var(--ratio, .5625);
+  overflow: hidden;
+  background: var(--noche-hondo);
+}
+.clip__base, .clip__poster, .clip__v {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.clip__base { filter: blur(12px); transform: scale(1.06); }
+.clip__poster { opacity: 1; transition: opacity 420ms var(--ease); }
+.clip__v { opacity: 0; transition: opacity 420ms var(--ease); }
+.clip.esta-lista .clip__v { opacity: 1; }
+.clip.esta-lista .clip__poster { opacity: 0; }
+
+.clip__son {
+  position: absolute; right: .6rem; bottom: .6rem;
+  background: color-mix(in srgb, var(--noche-hondo) 74%, transparent);
+  color: var(--tinta);
+  border: 1px solid color-mix(in srgb, var(--tinta) 26%, transparent);
+  padding: .42rem .7rem;
+  font-size: var(--t-tick);
+  letter-spacing: .04em;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+.clip__son[aria-pressed="true"] {
+  background: var(--ibiza); color: var(--noche-hondo); border-color: var(--ibiza);
+}
+
+/* ─── Taysson ─────────────────────────────────────────────── */
+
+.taysson { display: grid; gap: clamp(2rem, 6vh, 3.5rem); }
+.taysson__lado { display: grid; gap: clamp(2rem, 6vh, 3.5rem); }
+
+@media (min-width: 900px) {
+  .taysson { grid-template-columns: 1.15fr 1fr; align-items: start; }
+  /* Sólo la segunda columna baja: el desfase es lo que evita que las cuatro
+     piezas se lean como una rejilla de tarjetas. */
+  .taysson__lado + .taysson__lado { margin-top: clamp(2rem, 7vh, 5rem); }
+}
+
+/* Tres clips: uno abre ancho y los otros dos van debajo, desfasados.
+   Nada de rejilla 2×2: son tres, y se nota que son tres a propósito. */
+.taysson--tres { grid-template-columns: none; gap: clamp(2.5rem, 7vh, 4rem); }
+.taysson__par  { display: grid; gap: clamp(2.5rem, 7vh, 4rem); }
+
+@media (min-width: 700px) {
+  .taysson--tres > .taysson__alza { max-width: 66%; }
+  .taysson__par { grid-template-columns: 1.2fr 1fr; align-items: start; }
+  .taysson__par > *:last-child { margin-top: clamp(2rem, 7vh, 5rem); }
+}
+@media (min-width: 900px) {
+  /* El grid-template-columns de .taysson no manda aquí: .taysson--tres es
+     una columna con dos bloques dentro, no dos columnas. */
+  .taysson--tres { grid-template-columns: none; }
+}
+
+/* ─── 20·12 ───────────────────────────────────────────────── */
+/* Deliberadamente más pequeño y más callado que el 13·09. */
+
+.aniv { padding-block: calc(var(--hueco) * .85); }
+.aniv__cuerpo { max-width: 30em; margin-bottom: clamp(2rem, 6vh, 3rem); }
+
+.aniv__marca {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 8vw, 3.6rem);   /* nunca al nivel de la portada */
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--tinta-baja);
+  margin-bottom: .3em;
+}
+.aniv__titulo { font-family: var(--display); font-size: var(--t-m); margin-bottom: .5em; }
+
+.aniv__par { display: grid; gap: clamp(2rem, 6vh, 3.5rem); max-width: 46rem; }
+@media (min-width: 700px) { .aniv__par { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+/* ─── Y luego está todo lo demás (la galería) ──────────────────
+   No es una cuadrícula de miniaturas (DESIGN.md § Photography): es un ritmo.
+   Ninguna pieza tiene el mismo ancho que la anterior y ninguna está centrada.
+   El ancho varía de 100 % a 64 %, y en móvil van alternando de lado — esa
+   alternancia es lo que hace que se lea como una tira de momentos. */
+
+.galeria > .sangre { margin-block: clamp(3rem, 9vh, 5.5rem); }
+.galeria > .sangre:first-of-type { margin-top: 0; }
+
+.galeria__par {
+  display: grid;
+  gap: clamp(2.2rem, 7vh, 4rem);
+  margin-block: clamp(3rem, 9vh, 5.5rem);
+}
+.galeria__par > *              { width: 88%; }
+.galeria__par > *:last-child   { width: 70%; justify-self: end; }
+.galeria__par--vuelta > *              { width: 70%; justify-self: end; }
+.galeria__par--vuelta > *:last-child   { width: 88%; justify-self: start; }
+
+/* El respiro va desplazado a la derecha, entre dos bloques que empiezan a la
+   izquierda: es el péndulo que cierra el capítulo estrechándose. */
+.galeria__respiro { margin-block: clamp(3rem, 9vh, 5.5rem); }
+.galeria__respiro > * { width: 78%; margin-left: auto; }
+
+.galeria__cierre { margin-top: clamp(3rem, 9vh, 5.5rem); }
+.galeria__cierre > * { width: 64%; }
+
+@media (min-width: 700px) {
+  .galeria__par {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+  .galeria__par > *            { width: 100%; justify-self: start; }
+  .galeria__par > *:last-child { width: 84%; margin-top: clamp(3rem, 11vh, 7rem); }
+  /* La vuelta invierte quién manda y quién baja, no sólo el orden. */
+  .galeria__par--vuelta > *            { width: 84%; justify-self: end; margin-top: clamp(3rem, 11vh, 7rem); }
+  .galeria__par--vuelta > *:last-child { width: 100%; justify-self: start; margin-top: 0; }
+}
+
+@media (min-width: 1024px) {
+  .galeria__respiro > * { width: 40%; }
+  .galeria__cierre > * { width: 34%; }
+}
+
+/* Apaisado: lo mismo que en el resto de la web —las verticales se limitan
+   por altura y el ancho lo fija su proporción, o se convierten en un muro. */
+@media (orientation: landscape) and (min-width: 900px) {
+  .galeria__par > *,
+  .galeria__respiro > *,
+  .galeria__cierre > * { width: auto; }
+  .galeria__par .rafaga__marco,
+  .galeria__respiro .rafaga__marco,
+  .galeria__cierre .rafaga__marco {
+    height: min(68vh, 700px);
+    width: auto;
+    max-width: 100%;
+  }
+  /* La secuencia es un apunte: cabe entera de un vistazo o no es secuencia. */
+  .secuencia .rafaga__marco { height: min(46vh, 460px); width: auto; max-width: 100%; }
+  .secuencia { justify-content: start; grid-template-columns: repeat(3, auto); max-width: none; }
+  .secuencia--dos { grid-template-columns: repeat(2, auto); max-width: none; }
+}
+
+/* ─── Diecinueve pasos ────────────────────────────────────── */
+
+.senda { display: grid; gap: clamp(2rem, 6vh, 3.5rem); }
+.senda__cuerpo { max-width: 30em; }
+.senda__arco { margin: 0; }
+
+@media (min-width: 1024px) {
+  .senda {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'media cuerpo' 'media viva' 'media arco';
+    align-items: center;
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+  .senda__media  { grid-area: media; }
+  .senda__cuerpo { grid-area: cuerpo; align-self: end; }
+  .senda__viva   { grid-area: viva; align-self: start; max-width: 60%; }
+  .senda__arco   { grid-area: arco; align-self: start; max-width: 78%; }
+
+  /* Segundo y medio: es un apunte, no un plano. Se libra del tope de altura
+     que llevan los demás clips en apaisado para poder quedarse pequeño. */
+  .senda__viva .clip__marco { height: auto; width: 100%; }
+}
+
+/* ─── La carta ────────────────────────────────────────────── */
+/* Inversión tonal completa. Cambia la voz sin añadir otra familia. */
+
+.carta {
+  background: var(--papel);
+  color: var(--grafito);
+  padding-block: clamp(4.5rem, 14vh, 8rem);
+}
+.carta__hoja {
+  max-width: 31rem;              /* ≈ 58 caracteres en Gambarino */
+  margin-inline: auto;
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 3.4vw, 1.35rem);
+  line-height: 1.62;
+}
+.carta__enc { font-size: 1.35em; margin-bottom: 1.1em; }
+.carta__p { margin-bottom: 1.15em; max-width: none; }
+.carta__firma { margin-top: 2.2em; font-size: 1.15em; }
+.carta__pie {
+  font-family: var(--texto);
+  font-size: var(--t-cap);
+  color: color-mix(in srgb, var(--grafito) 55%, transparent);
+  margin-top: .3em;
+}
+.carta__aviso {
+  font-family: var(--texto);
+  font-size: var(--t-cap);
+  line-height: 1.5;
+  background: var(--ibiza);
+  color: var(--noche-hondo);
+  padding: .7rem .9rem;
+  margin-bottom: 2rem;
+  max-width: none;
+}
+
+/* ─── Final ───────────────────────────────────────────────── */
+
+.final {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+.final__fondo { position: absolute; inset: 0; z-index: 0; }
+.final__cara {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1400ms var(--ease);
+}
+.final__cara.es-visible { opacity: .46; }
+
+@media (orientation: landscape) and (min-width: 900px) {
+  .final__cara { object-position: 50% 14%; }
+}
+
+/* Velo radial: deja respirar la imagen en los bordes y sostiene el texto. */
+/* Sombra ajustada al bloque de texto, no a toda la pantalla: así la cara
+   que hay detrás se sigue viendo y el texto se lee igual. */
+.final__velo {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    radial-gradient(46% 26% at 50% 47%, rgba(18,14,12,.92) 0%, rgba(18,14,12,.6) 55%, rgba(18,14,12,0) 100%),
+    linear-gradient(180deg, rgba(18,14,12,.55), rgba(18,14,12,.05) 30%, rgba(18,14,12,.05) 70%, rgba(18,14,12,.75));
+}
+
+.final__cuerpo { position: relative; z-index: 2; justify-self: center; max-width: 26rem; }
+
+.final__frase {
+  font-family: var(--display);
+  font-size: var(--t-l);
+  line-height: 1.05;
+  margin-bottom: .35em;
+  min-height: 1.05em;
+  max-width: none;
+}
+.final__frase::after {
+  content: '';
+  display: inline-block; width: .06em; height: .82em;
+  background: var(--ibiza);
+  translate: .06em .06em;
+  animation: parpadeo 1s steps(2) infinite;
+}
+.final.esta-escrito .final__frase::after { display: none; }
+@keyframes parpadeo { to { opacity: 0; } }
+
+.final__sub { color: var(--tinta-baja); max-width: none; }
+
+.final__cierre {
+  margin-top: 2.6em;
+  font-size: var(--t-cap);
+  color: var(--tinta-baja);
+  line-height: 1.6;
+  max-width: none;
+  opacity: 0;
+  transition: opacity 1200ms var(--ease) 500ms;
+}
+.final.esta-escrito .final__cierre { opacity: 1; }
+
+.final__seguir {
+  position: absolute; z-index: 2;
+  left: 50%; translate: -50% 0;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  font-size: var(--t-tick); letter-spacing: .1em;
+  color: color-mix(in srgb, var(--tinta) 40%, transparent);
+  opacity: 0;
+  transition: opacity 900ms var(--ease) 1600ms;
+}
+.final.esta-escrito .final__seguir { opacity: 1; }
+
+/* ─── Post-créditos ───────────────────────────────────────── */
+
+.post { padding-bottom: calc(var(--hueco) + env(safe-area-inset-bottom)); }
+.post__titulo { font-family: var(--display); font-size: var(--t-m); margin-bottom: .5em; }
+
+/* La tira de post-créditos: trece fotos buenas que no encontraron capítulo.
+   Se ven de verdad —no son teselas del mosaico—, así que van a tamaño útil.
+   El desfase de las pares evita que trece verticales iguales se lean como
+   una hoja de contactos. */
+.post__tira {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(.55rem, 2.4vw, 1.1rem);
+  align-items: start;
+  margin: clamp(2rem, 6vh, 3rem) 0 clamp(2.5rem, 8vh, 4rem);
+}
+.post__tira > *:nth-child(even) { margin-top: clamp(1.2rem, 4vh, 2.6rem); }
+
+@media (min-width: 700px) {
+  .post__tira { grid-template-columns: repeat(3, 1fr); }
+  .post__tira > *:nth-child(even) { margin-top: 0; }
+  .post__tira > *:nth-child(3n + 2) { margin-top: clamp(1.5rem, 5vh, 3rem); }
+}
+@media (min-width: 1024px) {
+  .post__tira { grid-template-columns: repeat(4, 1fr); }
+  .post__tira > *:nth-child(3n + 2) { margin-top: 0; }
+  .post__tira > *:nth-child(4n + 2),
+  .post__tira > *:nth-child(4n + 4) { margin-top: clamp(1.5rem, 5vh, 3rem); }
+}
+
+.post__nota { margin-bottom: 0; }
+
+.post__mosaico {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 3px;
+  margin: clamp(1rem, 3vh, 1.5rem) 0 clamp(2rem, 6vh, 3rem);
+}
+.post__teja {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  filter: grayscale(.55) brightness(.72);
+  transition: filter 260ms var(--ease);
+}
+.post__teja:hover, .post__teja:focus-visible { filter: none; }
+
+@media (min-width: 700px) {
+  .post__mosaico { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+}
+
+.post__huevo {
+  font-family: var(--display);
+  font-size: var(--t-lead);
+  color: var(--tinta-baja);
+  margin-bottom: 2.5rem;
+}
+.post__fin {
+  font-family: var(--display);
+  font-size: var(--t-m);
+  margin-bottom: 1.5rem;
+}
+.post__volver {
+  display: inline-block;
+  color: var(--ibiza);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  font-size: var(--t-cap);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portada__fecha, .portada__pie, .portada__entrada, .portada__abajo,
+  .final__cierre, .final__seguir { transition: none; opacity: 1; translate: none; }
+  .final__frase::after { animation: none; }
+}

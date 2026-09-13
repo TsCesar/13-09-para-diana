@@ -1,0 +1,233 @@
+.juego { margin-top: clamp(3rem, 9vh, 5rem); }
+.juego--linea {
+  border-top: 1px solid color-mix(in srgb, var(--tinta) 14%, transparent);
+  padding-top: clamp(3rem, 9vh, 5rem);
+}
+
+.juego__titulo { font-family: var(--display); font-size: var(--t-m); margin-bottom: .45em; }
+.juego__intro { color: var(--tinta-baja); max-width: 30em; }
+.juego__estado {
+  color: var(--ibiza);
+  font-size: var(--t-cap);
+  min-height: 1.5em;
+  margin: 1rem 0 0;
+}
+
+/* ── La ráfaga correcta ───────────────────────────────────── */
+
+.eleccion { display: grid; gap: clamp(2.5rem, 7vh, 4rem); margin-top: 2rem; }
+
+.eleccion__fila { display: grid; gap: .9rem; }
+
+/* En escritorio, las tres ráfagas se ponen en tres columnas y cada una apila
+   su vista sobre su propia tira. Partir cada fila en dos dejaba media pantalla
+   vacía al lado de la tira. */
+@media (min-width: 1024px) {
+  .eleccion { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.25rem; align-items: start; }
+  .eleccion__fila { gap: .75rem; }
+}
+
+.eleccion__vista .rafaga__marco { background: var(--noche-hondo); }
+
+/* Tira de contactos real: en móvil se pasa con el dedo; en escritorio,
+   donde hay sitio de sobra, se despliega entera y se ve la ráfaga completa. */
+.eleccion__tiras {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-bottom: .5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--tinta) 22%, transparent) transparent;
+}
+
+@media (min-width: 1024px) {
+  .eleccion__tiras { flex-wrap: wrap; overflow-x: visible; align-content: start; }
+  /* Seis por fila: la tira llena su columna y se lee como una hoja de contactos. */
+  .tira { width: calc((100% - 5 * 4px) / 6); }
+}
+
+.tira {
+  flex: 0 0 auto;
+  width: 52px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  scroll-snap-align: center;
+  position: relative;
+  line-height: 0;
+}
+.tira img {
+  width: 100%; aspect-ratio: .625; object-fit: cover;
+  /* Fondo propio: mientras el fotograma no ha llegado, la casilla se ve como
+     una casilla vacía y no como una imagen rota. */
+  background: var(--eleva);
+  opacity: .42;
+  outline: 1px solid transparent;
+  transition: opacity 140ms linear, outline-color 140ms linear;
+}
+.tira:hover img { opacity: .8; }
+.tira[aria-checked="true"] img { opacity: 1; outline-color: var(--ibiza); outline-width: 2px; }
+.tira[aria-checked="true"]::after {
+  content: ''; position: absolute; inset-inline: 0; bottom: -4px; height: 2px;
+  background: var(--ibiza);
+}
+
+@media (min-width: 700px) { .tira { width: 62px; } }
+
+.boton {
+  display: inline-block;
+  background: var(--ibiza);
+  color: var(--noche-hondo);
+  border: 0;
+  padding: .65rem 1.15rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: var(--t-cap);
+  letter-spacing: .01em;
+}
+.boton:hover { background: color-mix(in srgb, var(--ibiza) 84%, #fff); }
+.boton--tenue {
+  background: none;
+  color: var(--tinta-baja);
+  border: 1px solid color-mix(in srgb, var(--tinta) 22%, transparent);
+  margin-top: 1.2rem;
+}
+.boton--tenue:hover { background: none; color: var(--tinta); border-color: var(--tinta); }
+
+/* ── ¿Cuántas crees que hice? ─────────────────────────────── */
+
+.cuantas { margin-top: 2rem; max-width: 32rem; }
+
+.cuantas__preg {
+  font-family: var(--display);
+  font-size: var(--t-lead);
+  margin-bottom: .6rem;
+}
+
+.cuantas__cifra {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(3.4rem, 14vw, 5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta);
+  transition: color 260ms var(--ease);
+}
+.cuantas__cifra.es-real { color: var(--ibiza); }
+
+.cuantas__mando {
+  -webkit-appearance: none; appearance: none;
+  width: 100%;
+  height: 34px;
+  background: none;
+  margin: .6rem 0 1.1rem;
+  cursor: pointer;
+}
+.cuantas__mando::-webkit-slider-runnable-track {
+  height: 2px; background: color-mix(in srgb, var(--tinta) 26%, transparent);
+}
+.cuantas__mando::-moz-range-track {
+  height: 2px; background: color-mix(in srgb, var(--tinta) 26%, transparent);
+}
+.cuantas__mando::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 30px; margin-top: -14px;
+  background: var(--ibiza); border: 0; border-radius: 0;
+}
+.cuantas__mando::-moz-range-thumb {
+  width: 14px; height: 30px;
+  background: var(--ibiza); border: 0; border-radius: 0;
+}
+.cuantas__mando:disabled { cursor: default; opacity: .5; }
+
+.cuantas__fallo {
+  min-height: 1.6em;
+  margin: 1rem 0 0;
+  font-size: var(--t-cap);
+  color: var(--tinta-baja);
+}
+
+/* Marcas de avance: son 4 preguntas, y es una secuencia de verdad. */
+.cuantas__marcas { display: flex; gap: 5px; margin-top: 1.4rem; }
+.cuantas__marcas i {
+  width: 22px; height: 2px;
+  background: color-mix(in srgb, var(--tinta) 18%, transparent);
+}
+.cuantas__marcas i.es-activa { background: var(--tinta); }
+.cuantas__marcas i.es-hecha { background: var(--ibiza); }
+
+.cuantas__cierre {
+  margin-top: 2.2rem;
+  font-family: var(--display);
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  max-width: 26em;
+}
+
+/* ─── 3. Seis caras ────────────────────────────────────────── */
+/* Tres columnas en móvil: doce cartas entran de una pantalla sin scroll,
+   y cada carta pasa de 44px de sobra. Cuatro columnas a partir de tablet. */
+
+.memoria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 2vw, 12px);
+  margin-top: 1.6rem;
+  max-width: 34rem;
+}
+@media (min-width: 700px) { .memoria { grid-template-columns: repeat(4, 1fr); } }
+
+/* `naipe` y no `carta`: .carta ya es el capítulo de la carta. Llamar igual a
+   las dos cosas le quitaba a la carta de Cesar el papel y el margen. */
+.naipe {
+  position: relative;
+  aspect-ratio: .78;
+  padding: 0; border: 0; background: none;
+  cursor: pointer;
+}
+.naipe__dorso, .naipe__cara {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  transition: opacity 320ms var(--ease);
+}
+/* El dorso: una sola marca, la del raíl de la ráfaga. Se probó con el raíl
+   entero y doce dorsos rayados juntos parecían un error de carga, no una
+   baraja. Una marca por carta dice lo mismo y se calla. */
+.naipe__dorso {
+  background: var(--eleva);
+  border: 1px solid color-mix(in srgb, var(--tinta) 12%, transparent);
+  display: grid; place-items: center;
+}
+.naipe__dorso::after {
+  content: '';
+  width: 14px; height: 1px;
+  background: color-mix(in srgb, var(--tinta) 30%, transparent);
+  transition: width 220ms var(--ease), background-color 220ms var(--ease);
+}
+.naipe:hover .naipe__dorso::after,
+.naipe:focus-visible .naipe__dorso::after { width: 20px; background: var(--ibiza); }
+.naipe__cara { object-fit: cover; opacity: 0; }
+
+.naipe.es-vuelta .naipe__dorso { opacity: 0; }
+.naipe.es-vuelta .naipe__cara  { opacity: 1; }
+.naipe.es-suya { cursor: default; }
+.naipe.es-suya .naipe__cara { outline: 2px solid var(--ibiza); outline-offset: -2px; }
+
+.memoria__acc { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.4rem; }
+
+/* ─── Quiz (sólo si se rellena) ────────────────────────────── */
+
+.quiz { margin-top: 1.4rem; max-width: 32rem; }
+.quiz__preg { font-family: var(--display); font-size: var(--t-lead); margin-bottom: 1rem; }
+.quiz__ops { display: grid; gap: .55rem; }
+.quiz__op { text-align: left; width: 100%; }
+.quiz__op.es-bien { border-color: var(--ibiza); color: var(--ibiza); }
+.quiz__op.es-mal  { opacity: .45; }
+
+@media (prefers-reduced-motion: reduce) {
+  .naipe__dorso, .naipe__cara { transition: none; }
+}

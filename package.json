@@ -1,0 +1,22 @@
+{
+  "name": "para-diana",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "13·09 — Para Diana",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "media:analyze": "node scripts/media-analyze.mjs",
+    "media:prepare": "node scripts/media-prepare.mjs",
+    "qa": "node scripts/qa-shots.mjs",
+    "qa:uso": "node scripts/qa-uso.mjs",
+    "og": "node scripts/og-image.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.4",
+    "vite": "^7.1.7",
+    "playwright": "^1.56.0"
+  }
+}

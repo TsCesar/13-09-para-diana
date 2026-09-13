@@ -1,0 +1,347 @@
+/* Lo que va por encima de la página o pegado a sus bordes:
+   el recorrido, la lupa, la puerta, la vela, los secretos y la música.
+   Todo con los mismos tokens: ni un color ni una tipografía nuevos.     */
+
+/* Cuando hay una capa abierta, la página de detrás no se mueve. */
+.esta-bloqueado, .esta-bloqueado body { overflow: hidden; }
+
+/* ─── El recorrido ─────────────────────────────────────────── */
+/* Es el raíl de la ráfaga contando capítulos. Vive en el borde derecho
+   para no chocar con el de las fotos, que va por la izquierda.          */
+
+.recorrido {
+  position: fixed;
+  right: calc(.55rem + env(safe-area-inset-right));
+  top: 50%; translate: 0 -50%;
+  z-index: 40;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+  padding: .5rem 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms var(--ease);
+}
+.recorrido.es-visible { opacity: .55; }
+
+.recorrido__tick {
+  display: block; width: 7px; height: 1px;
+  background: var(--tinta);
+  box-shadow: 0 0 0 .5px rgba(0, 0, 0, .55);
+  transition: width 220ms var(--ease), background-color 220ms var(--ease), height 220ms var(--ease);
+}
+.recorrido__tick.es-aqui { width: 16px; height: 2px; background: var(--ibiza); }
+
+/* Sobre el papel de la carta, la tinta clara desaparece. Todo lo que vive
+   pegado al borde se oscurece mientras dure ese capítulo. */
+.sobre-claro .recorrido { opacity: .5; }
+.sobre-claro .recorrido__tick { background: var(--grafito); box-shadow: none; }
+.sobre-claro .recorrido__tick.es-aqui { background: #B98A00; }
+.sobre-claro .secreto__cuenta { color: color-mix(in srgb, var(--grafito) 46%, transparent); }
+.sobre-claro .musica {
+  background: color-mix(in srgb, var(--papel) 86%, transparent);
+  color: var(--grafito);
+  border-color: color-mix(in srgb, var(--grafito) 26%, transparent);
+}
+.sobre-claro .musica__onda i { background: color-mix(in srgb, var(--grafito) 55%, transparent); }
+
+@media (min-width: 1024px) {
+  .recorrido { right: calc(1.1rem + env(safe-area-inset-right)); gap: 7px; }
+  .recorrido__tick { width: 9px; }
+  .recorrido__tick.es-aqui { width: 20px; }
+}
+/* En apaisado y bajito estorba más que orienta. */
+@media (orientation: landscape) and (max-height: 460px) { .recorrido { display: none; } }
+
+/* ─── La lupa ──────────────────────────────────────────────── */
+
+.lupa {
+  position: fixed; inset: 0; z-index: 90;
+  background: color-mix(in srgb, var(--noche-hondo) 96%, transparent);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'antes foto luego';
+  align-items: center;
+  padding: calc(3.2rem + env(safe-area-inset-top)) .5rem calc(3.2rem + env(safe-area-inset-bottom));
+}
+.lupa[hidden] { display: none; }
+
+.lupa__hueco {
+  grid-area: foto;
+  margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  min-width: 0; min-height: 0; height: 100%;
+}
+/* Nunca se estira: los fotogramas del mosaico son de 420px y agrandarlos
+   por encima de su tamaño es enseñarlos peor de lo que están. */
+.lupa__img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain;
+}
+
+.lupa__cerrar, .lupa__paso {
+  background: none; border: 0; cursor: pointer;
+  color: var(--tinta);
+  line-height: 1;
+  padding: 0;
+  min-width: 44px; min-height: 44px;   /* objetivo táctil */
+  opacity: .7;
+  transition: opacity 200ms var(--ease);
+}
+.lupa__cerrar:hover, .lupa__paso:hover { opacity: 1; }
+.lupa__paso[disabled] { opacity: .16; cursor: default; }
+
+.lupa__cerrar {
+  position: absolute;
+  top: calc(.4rem + env(safe-area-inset-top));
+  right: calc(.4rem + env(safe-area-inset-right));
+  font-size: 2rem;
+}
+.lupa__paso { font-size: 2.4rem; }
+.lupa__paso--antes { grid-area: antes; }
+.lupa__paso--luego { grid-area: luego; }
+
+.lupa__cuenta {
+  position: absolute;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  left: 0; right: 0;
+  text-align: center;
+  margin: 0; max-width: none;
+  font-size: var(--t-tick); letter-spacing: .1em;
+  color: var(--tinta-baja);
+}
+
+.mosaico__abrir { margin-top: 1rem; }
+
+/* ─── Los secretos ─────────────────────────────────────────── */
+
+/* Un secreto no se anuncia: lo único que cambia es el cursor. */
+.es-secreto { cursor: pointer; }
+.es-secreto.se-encontro { color: var(--ibiza); transition: color 600ms var(--ease); }
+
+.huella {
+  position: absolute;
+  right: calc(var(--aire) * .6); bottom: 1.1rem;
+  background: none; border: 0; padding: .6rem; cursor: pointer;
+  line-height: 0;
+  opacity: .14;
+  transition: opacity 500ms var(--ease), rotate 500ms var(--ease);
+}
+.huella svg { fill: var(--tinta); }
+.huella:hover, .huella:focus-visible { opacity: .42; }
+.huella.se-encontro { opacity: .8; rotate: -12deg; }
+.huella.se-encontro svg { fill: var(--ibiza); }
+
+.secreto__aviso {
+  position: fixed; z-index: 80;
+  left: 50%; translate: -50% 0;
+  bottom: calc(3.4rem + env(safe-area-inset-bottom));
+  margin: 0; max-width: min(30rem, calc(100vw - 2rem));
+  display: flex; flex-direction: column; gap: .15rem;
+  background: var(--ibiza); color: var(--noche-hondo);
+  padding: .6rem .9rem;
+  font-size: var(--t-cap); line-height: 1.45; text-align: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 400ms var(--ease), translate 400ms var(--ease);
+}
+.secreto__aviso.es-visible { opacity: 1; translate: -50% -.4rem; }
+.secreto__remate { font-weight: 500; }
+
+.secreto__cuenta {
+  position: fixed; z-index: 80;
+  left: calc(.7rem + env(safe-area-inset-left));
+  bottom: calc(.7rem + env(safe-area-inset-bottom));
+  font-size: var(--t-tick); letter-spacing: .1em;
+  color: color-mix(in srgb, var(--tinta) 34%, transparent);
+  pointer-events: none;
+}
+
+/* ─── La vela ──────────────────────────────────────────────── */
+
+.deseo {
+  position: fixed; inset: 0; z-index: 95;
+  background: var(--noche-hondo);
+  display: grid; align-content: center; justify-items: center;
+  gap: 1.2rem;
+  padding: calc(2rem + env(safe-area-inset-top)) var(--aire) calc(2rem + env(safe-area-inset-bottom));
+  text-align: center;
+}
+.deseo[hidden] { display: none; }
+
+.deseo__confeti { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+.deseo__paso {
+  margin: 0; max-width: none;
+  font-family: var(--display); font-size: var(--t-m);
+  opacity: 0; transition: opacity 700ms var(--ease);
+}
+.deseo__paso.es-visible { opacity: 1; }
+
+.deseo__vela {
+  position: relative;
+  background: none; border: 0; padding: 1.2rem 2rem; cursor: pointer;
+  display: grid; justify-items: center; gap: 0;
+}
+.deseo__vela[disabled] { cursor: default; }
+
+.deseo__llama {
+  display: block; width: 14px; height: 30px;
+  margin-bottom: 6px;
+  background: radial-gradient(50% 62% at 50% 68%, #FFF3C4 0%, var(--ibiza) 48%, rgba(255,196,0,0) 72%);
+  border-radius: 50% 50% 48% 48% / 62% 62% 38% 38%;
+  transform-origin: 50% 100%;
+  animation: llama 2.6s var(--ease) infinite;
+  filter: drop-shadow(0 0 16px rgba(255, 196, 0, .5));
+  transition: opacity 450ms var(--ease), scale 450ms var(--ease);
+}
+@keyframes llama {
+  0%, 100% { scale: 1 1;      rotate: -1.5deg; }
+  50%      { scale: .94 1.06; rotate: 2deg; }
+}
+.deseo__cera {
+  display: block; width: 16px; height: clamp(90px, 22vh, 150px);
+  background: linear-gradient(180deg, var(--papel), #cbc0ac);
+}
+/* Apagada: la llama se va hacia arriba y se queda el hilo de humo del borde. */
+.deseo.esta-soplada .deseo__llama { opacity: 0; scale: .4 .2; animation: none; }
+.deseo.esta-soplada .deseo__cera { background: linear-gradient(180deg, #9d9384, #7c7365); }
+
+.deseo__ayuda {
+  font-size: var(--t-tick); letter-spacing: .12em;
+  color: color-mix(in srgb, var(--tinta) 40%, transparent);
+  opacity: 0; transition: opacity 500ms var(--ease);
+}
+.deseo.esta-lista .deseo__ayuda { opacity: 1; }
+.deseo.esta-soplada .deseo__ayuda { opacity: 0; }
+
+.deseo__final, .deseo__cerrar {
+  margin: 0; max-width: none;
+  opacity: 0; pointer-events: none;
+  transition: opacity 900ms var(--ease) 600ms;
+}
+.deseo__final { font-family: var(--display); font-size: var(--t-m); }
+.deseo.esta-hecho .deseo__final,
+.deseo.esta-hecho .deseo__cerrar { opacity: 1; pointer-events: auto; }
+.deseo.esta-hecho .deseo__paso { opacity: 0; }
+
+/* ─── La puerta ────────────────────────────────────────────── */
+
+.puerta {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--noche-hondo);
+  display: grid; align-content: center; justify-items: center;
+  gap: 1rem;
+  padding: calc(2rem + env(safe-area-inset-top)) var(--aire) calc(2rem + env(safe-area-inset-bottom));
+  text-align: center;
+  transition: opacity 1100ms var(--ease);
+}
+.puerta.se-abre { opacity: 0; pointer-events: none; }
+
+/* `display: grid` gana al [hidden] del navegador, y sin esto la pregunta se
+   veía a la vez que la intro. Cualquier cosa oculta dentro de una capa, oculta.
+   El botón de música lleva `display: flex` y cae en la misma trampa: mientras
+   está la pregunta de «¿Con música?» se aparta, y sin esta regla se quedaba
+   puesto diciendo lo mismo dos veces en la misma esquina. */
+.puerta [hidden], .deseo [hidden], .lupa[hidden], .musica[hidden] { display: none !important; }
+
+.puerta__cuerpo { display: grid; justify-items: center; gap: .9rem; }
+.puerta__linea {
+  margin: 0; max-width: 18em;
+  font-family: var(--display); font-size: var(--t-lead);
+  opacity: 0;
+  animation: entra 900ms var(--ease) forwards;
+  animation-delay: calc(var(--k) * 1100ms + 400ms);
+}
+.puerta__boton {
+  margin-top: 1rem;
+  opacity: 0;
+  animation: entra 900ms var(--ease) forwards;
+  animation-delay: 3.8s;
+}
+@keyframes entra { from { opacity: 0; translate: 0 .5em; } to { opacity: 1; translate: 0 0; } }
+
+.puerta__reto { display: grid; justify-items: center; gap: .8rem; width: min(26rem, 100%); }
+.puerta__preg { margin: 0; font-family: var(--display); font-size: var(--t-lead); }
+.puerta__campo {
+  width: 100%;
+  background: none; color: var(--tinta);
+  border: 0; border-bottom: 1px solid color-mix(in srgb, var(--tinta) 34%, transparent);
+  padding: .6rem .2rem;
+  font: inherit; text-align: center;
+  min-height: 44px;
+}
+.puerta__campo:focus { outline: none; border-bottom-color: var(--ibiza); }
+.puerta__pista, .puerta__fallo {
+  margin: 0; font-size: var(--t-cap); color: var(--tinta-baja); min-height: 1.5em;
+}
+.puerta__fallo { color: var(--ibiza); }
+
+.puerta__ok, .puerta__hola {
+  margin: 0; max-width: none;
+  font-family: var(--display);
+  opacity: 0; transition: opacity 900ms var(--ease);
+}
+.puerta__ok { font-size: var(--t-lead); color: var(--tinta-baja); }
+.puerta__hola { font-size: var(--t-m); margin-top: .6em; }
+.puerta__ok.es-visible, .puerta__hola.es-visible { opacity: 1; }
+
+.reinicio { margin-top: 2rem; }
+
+/* ─── La música ────────────────────────────────────────────── */
+
+.musica {
+  position: fixed; z-index: 60;
+  right: calc(.7rem + env(safe-area-inset-right));
+  bottom: calc(.7rem + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: .45rem;
+  min-height: 44px; padding: .45rem .75rem;
+  background: color-mix(in srgb, var(--noche-hondo) 80%, transparent);
+  color: var(--tinta);
+  border: 1px solid color-mix(in srgb, var(--tinta) 22%, transparent);
+  font-size: var(--t-tick); letter-spacing: .06em;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+.musica__onda { display: flex; align-items: flex-end; gap: 2px; height: 11px; }
+.musica__onda i { display: block; width: 2px; height: 3px; background: var(--tinta-baja); }
+.musica.esta-sonando .musica__onda i { background: var(--ibiza); animation: onda 900ms ease-in-out infinite; }
+.musica.esta-sonando .musica__onda i:nth-child(2) { animation-delay: .18s; }
+.musica.esta-sonando .musica__onda i:nth-child(3) { animation-delay: .36s; }
+@keyframes onda { 0%, 100% { height: 3px; } 50% { height: 11px; } }
+
+/* «Una cosa antes de empezar»: sale una vez, al abrir la puerta, y se va en
+   cuanto ella elige. Fija y no dentro de la portada: metida en el flujo, en un
+   móvil de 320px empujaba el 13·09 fuera del recorte de la portada. */
+.musica__preg {
+  position: fixed; z-index: 62;
+  left: 50%; translate: -50% 0;
+  bottom: calc(1.1rem + env(safe-area-inset-bottom));
+  width: min(20rem, calc(100vw - 2 * var(--aire)));
+  display: grid; justify-items: stretch; gap: .5rem;
+  padding: 1rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--noche-hondo) 93%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tinta) 20%, transparent);
+  backdrop-filter: blur(6px);
+}
+.musica__preg p {
+  margin: 0 0 .25rem; max-width: none;
+  font-size: var(--t-cap); color: var(--tinta-baja);
+}
+
+/* ─── Razones (sólo si se rellenan) ────────────────────────── */
+
+.razones { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1.6rem, 5vh, 2.6rem); }
+.razon { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: baseline; }
+.razon__n {
+  font-family: var(--display); font-size: var(--t-m);
+  color: color-mix(in srgb, var(--ibiza) 70%, transparent);
+  line-height: 1;
+}
+.razon__t { margin: 0; font-family: var(--display); font-size: var(--t-lead); line-height: 1.45; }
+
+@media (prefers-reduced-motion: reduce) {
+  .recorrido__tick, .secreto__aviso, .deseo__paso, .deseo__final, .deseo__cerrar,
+  .puerta, .huella { transition: none; }
+  .deseo__llama, .musica.esta-sonando .musica__onda i { animation: none; }
+  .puerta__linea, .puerta__boton { animation: none; opacity: 1; }
+}
